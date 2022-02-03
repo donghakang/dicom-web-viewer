@@ -20,4 +20,6 @@ export default function initCornerstone() {
   cornerstoneTools.init({
     globalToolSyncEnabled: true,
   });
+
+  
 }

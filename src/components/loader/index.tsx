@@ -1,3 +1,3 @@
-import ProgressView from "./ProgressView";
+import ProgressBar from "./ProgressBar";
 
-export default ProgressView;
+export default ProgressBar;
