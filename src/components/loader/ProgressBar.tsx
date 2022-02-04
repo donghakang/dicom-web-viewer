@@ -23,7 +23,7 @@ import { CornerstoneImageInterface } from "../../@types/CornerstoneImageInterfac
 import { useDispatch } from "react-redux";
 import { setImages } from "../../redux/reducers/imageSlice";
 import { useAppDispatch } from "../../redux/hooks";
-import * as Styled from './style/ProgressBar.styled'
+import * as Styled from './style'
 
 interface ProgressInterface {
   files: File[];
@@ -104,14 +104,11 @@ const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
           setProgress(prev => prev + step)
         })
         .then(() => {
-          console.log(items.length, files.length);
           if (items.length === files.length) {
 
-            // TODO: sort images by instance number
             items.sort((l, r) => {
               return l.instanceNumber - r.instanceNumber
             })
-            console.log(items)
             dispatch(setImages(items))
             setProgress(0)
           }
@@ -122,6 +119,7 @@ const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
 
   useEffect(() => {
     const items = loadWADOImages(files);
+    console.log(items)
   }, [files]);
 
   return <Styled.ProgressBar progress={progress}></Styled.ProgressBar>;
