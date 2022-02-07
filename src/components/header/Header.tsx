@@ -12,7 +12,14 @@ const Header: React.FC<{
   setTool: React.Dispatch<React.SetStateAction<string>>;
   setRightSideMenuOpened: React.Dispatch<React.SetStateAction<boolean>>;
   setLeftSideMenuOpened: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ useRef, setTool, setRightSideMenuOpened, setLeftSideMenuOpened }) => {
+  setRightSideMenuMode: React.Dispatch<React.SetStateAction<string | null>>;
+}> = ({
+  useRef,
+  setTool,
+  setRightSideMenuOpened,
+  setLeftSideMenuOpened,
+  setRightSideMenuMode,
+}) => {
   const dispatch = useAppDispatch();
   // TODO: 불러오기, PAN, Zoom, Threshold
   const tools = [
@@ -44,8 +51,19 @@ const Header: React.FC<{
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     type: string
   ) {
-    // dispatch(setTool(type));
     setTool(type);
+    if (type === "Wwwc") {
+      setRightSideMenuOpened(true);
+      setRightSideMenuMode("Wwwc");
+    }
+    if (type === "Zoom") {
+      setRightSideMenuOpened(true);
+      setRightSideMenuMode("Zoom");
+    }
+    if (type === "Pan") {
+      setRightSideMenuOpened(false);
+      setRightSideMenuMode(null);
+    }
   }
 
   function handleToggleRightSideMenu() {

@@ -7,6 +7,11 @@ ${normalize}
     :root {
         --letter-spacing-tighter: -0.05rem;
         --letter-spacign-tight: -0.025rem;
+        
+
+
+        --header-height: 44px;    // including progress bar
+        --side-menu-width: 320px;
     }
 
   html, body {

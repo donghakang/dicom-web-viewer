@@ -1,8 +1,14 @@
 import styled from "styled-components";
-
-export const DicomViewer = styled.div`
+import { motion } from "framer-motion";
+export const Viewer = styled.div`
   width: 100%;
-    height: 100%;
+  height: calc(100vh - var(--header-height));
+  display: flex;
+`;
+
+export const DicomViewer = styled(motion.div)`
+
+
 `;
 
 export const DicomViewerLoader = styled.div`
@@ -21,10 +27,4 @@ export const DicomViewerLoader = styled.div`
     margin-top: 8px;
     color: ${(props) => props.theme.color.loadColor1};
   }
-`;
-
-export const Viewer = styled.div`
-  width: 100vw;
-  height: calc(100vh - 44px);
-  display: flex;
 `;

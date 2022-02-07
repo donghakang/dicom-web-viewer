@@ -1,11 +1,13 @@
-import styled from 'styled-components'
-import { motion } from 'framer-motion'
+import styled from "styled-components";
+import { motion } from "framer-motion";
 
 export const RightSideMenu = styled(motion.div)`
-    width: 320px;
-    height: 100%;
+  position: fixed;
 
-    background-color: aliceblue;
+  top: var(--header-height);;
+  right: 0;
+  width: 320px;
+  height: calc(100% - var(--header-height));
 
-    transform: translate(20px, 0)
-`
+  background-color: aliceblue;
+`;
