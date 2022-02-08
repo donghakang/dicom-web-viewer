@@ -12,16 +12,7 @@ const Viewer: React.FC<{ fileRef: React.RefObject<HTMLInputElement> }> = ({
   const [rightSideMenuOpened, setRightSideMenuOpened] =
     useState<boolean>(false);
   const [leftSideMenuOpened, setLeftSideMenuOpened] = useState<boolean>(false);
-  const [rightSideMenuMode, setRightSideMenuMode] = useState<string | null>(
-    null
-  );
-  const [canvasViewStyle, setCanvasViewStyle] = useState<{
-    width: string;
-    height: string;
-    marginLeft?: string;
-    marginRight?: string;
-  }>({ width: "300px", height: "300px" });
-
+  
   return (
     <>
       <Header
@@ -29,15 +20,13 @@ const Viewer: React.FC<{ fileRef: React.RefObject<HTMLInputElement> }> = ({
         setTool={setTool}
         setRightSideMenuOpened={setRightSideMenuOpened}
         setLeftSideMenuOpened={setLeftSideMenuOpened}
-        setRightSideMenuMode={setRightSideMenuMode}
       />
       <Styled.Viewer>
         <DicomViewer
-          tool={tool}
           leftSideMenuOpened={leftSideMenuOpened}
           rightSideMenuOpened={rightSideMenuOpened}
         />
-        <RightSideMenu open={rightSideMenuOpened} mode={rightSideMenuMode} />
+        <RightSideMenu open={rightSideMenuOpened} />
       </Styled.Viewer>
     </>
   );

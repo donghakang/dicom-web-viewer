@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+// import CornerstoneViewport from "react-cornerstone-viewport";
 import CornerstoneViewport from "react-cornerstone-viewport";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -7,12 +8,12 @@ import DicomViewerLoader from "./DicomViewerLoader";
 import cornerstone from "cornerstone-core";
 
 import * as Styled from "./style";
+import { createPartiallyEmittedExpression } from "typescript";
 
 const DicomViewer: React.FC<{
-  tool: string;
   leftSideMenuOpened: boolean;
   rightSideMenuOpened: boolean;
-}> = ({ tool, leftSideMenuOpened, rightSideMenuOpened }) => {
+}> = ({ leftSideMenuOpened, rightSideMenuOpened }) => {
   const [tools, setTools] = useState([
     // Mouse
     {
@@ -39,9 +40,13 @@ const DicomViewer: React.FC<{
   ]);
 
   const images = useAppSelector((state) => state.imageLoader.images);
-  const dispatch = useAppDispatch();
-  const vRef = useRef(null);
+  const { tool, viewportData } = useAppSelector((state) => state.toolType);
+  const elRef = useRef(null);
+  const [wc, setWc] = useState(0);
+  const [ww, setWw] = useState(0);
+  const [scale, setScale] = useState(0);
   const [element, setElement] = useState(null);
+
   const variants = {
     hidden: {
       width: "calc(100% - var(--side-menu-width)",
@@ -51,20 +56,17 @@ const DicomViewer: React.FC<{
     visible: { width: "100%", transition: { ease: "easeInOut" } },
   };
 
-  useEffect(() => {
-    console.log("VREF", vRef, vRef.current);
-  });
-
   function handleClick() {
-    console.log("what is going on");
-    if (vRef.current !== null) {
-      console.log(",,,", vRef.current);
-      const viewport = cornerstone.getViewport(vRef);
-      console.log(viewport.voi);
-    } else {
-      console.log("???", vRef.current);
-    }
+    setWc(Math.random() * 1000);
+    setWw(Math.random() * 1000);
+    setScale(Math.random());
+
+    console.log(ww, wc, scale);
   }
+
+  useEffect(() => {
+    console.log('🍓', element)
+  }, [element]);
 
   return (
     <>
@@ -83,6 +85,16 @@ const DicomViewer: React.FC<{
             className={"active"}
             activeTool={tool}
             loadingIndicatorComponent={DicomViewerLoader}
+            onElementEnabled={(elementEnabledEvt: any) => {
+              const cornerstoneElement = elementEnabledEvt.detail.element;
+
+              console.log(cornerstoneElement);
+              setElement(cornerstoneElement);
+            }}
+            wc={wc}
+            ww={ww}
+            scale={scale}
+            ref={elRef}
           />
         </Styled.DicomViewer>
       ) : (
