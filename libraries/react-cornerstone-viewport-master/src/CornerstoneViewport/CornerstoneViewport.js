@@ -60,6 +60,11 @@ class CornerstoneViewport extends Component {
       PropTypes.string,
       PropTypes.func,
     ]),
+    scrollbarComponent: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+      PropTypes.func,
+    ]),
     // Cornerstone Events
     onElementEnabled: PropTypes.func, // Escape hatch
     eventListeners: PropTypes.arrayOf(
@@ -99,6 +104,7 @@ class CornerstoneViewport extends Component {
     isPlaying: false,
     cineFrameRate: 24,
     viewportOverlayComponent: ViewportOverlay,
+    scrollbarComponent: ImageScrollbar,
     imageIds: ['no-id://'],
     initialViewport: {},
     // Init
@@ -437,6 +443,23 @@ class CornerstoneViewport extends Component {
           imageId={imageId}
         />
       )
+    );
+  }
+
+  getScrollbar() {
+    const { scrollbarComponent: Component } = this.props;
+    const scrollbarMax = this.props.imageIds.length - 1;
+    const scrollbarHeight = this.element
+      ? `${this.element.clientHeight - 20}px`
+      : '100px';
+
+    return (
+      <Component
+        onInputCallback={this.imageSliderOnInputCallback}
+        max={scrollbarMax}
+        height={scrollbarHeight}
+        value={this.state.imageIdIndex}
+      />
     );
   }
 
@@ -800,10 +823,6 @@ class CornerstoneViewport extends Component {
   render() {
     const isLoading = this.state.isLoading;
     const displayLoadingIndicator = isLoading || this.state.error;
-    const scrollbarMax = this.props.imageIds.length - 1;
-    const scrollbarHeight = this.element
-      ? `${this.element.clientHeight - 20}px`
-      : '100px';
 
     return (
       <div
@@ -837,12 +856,7 @@ class CornerstoneViewport extends Component {
           {this.getOverlay()}
           {this.getOrientationMarkersOverlay()}
         </div>
-        <ImageScrollbar
-          onInputCallback={this.imageSliderOnInputCallback}
-          max={scrollbarMax}
-          height={scrollbarHeight}
-          value={this.state.imageIdIndex}
-        />
+        {this.getScrollbar()}
         {this.props.children}
       </div>
     );

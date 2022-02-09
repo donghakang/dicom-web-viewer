@@ -9,6 +9,9 @@ import cornerstone from "cornerstone-core";
 
 import * as Styled from "./style";
 import { createPartiallyEmittedExpression } from "typescript";
+import ViewportOverlay from "./ViewportOverlay";
+import ImageScrollbar from "./ImageScrollbar";
+import { changeScale, changeWc, changeWw, setDefaultData } from "../../redux/reducers/toolSlice";
 
 const DicomViewer: React.FC<{
   leftSideMenuOpened: boolean;
@@ -41,10 +44,8 @@ const DicomViewer: React.FC<{
 
   const images = useAppSelector((state) => state.imageLoader.images);
   const { tool, viewportData } = useAppSelector((state) => state.toolType);
-  const elRef = useRef(null);
-  const [wc, setWc] = useState(0);
-  const [ww, setWw] = useState(0);
-  const [scale, setScale] = useState(0);
+  const dispatch = useAppDispatch();
+
   const [element, setElement] = useState(null);
 
   const variants = {
@@ -56,17 +57,6 @@ const DicomViewer: React.FC<{
     visible: { width: "100%", transition: { ease: "easeInOut" } },
   };
 
-  function handleClick() {
-    setWc(Math.random() * 1000);
-    setWw(Math.random() * 1000);
-    setScale(Math.random());
-
-    console.log(ww, wc, scale);
-  }
-
-  useEffect(() => {
-    console.log('🍓', element)
-  }, [element]);
 
   return (
     <>
@@ -76,7 +66,18 @@ const DicomViewer: React.FC<{
           initial="visible"
           animate={rightSideMenuOpened ? "hidden" : "visible"}
         >
-          <button onClick={handleClick}>PRESS HERE</button>
+          {/* <button onClick={handleClick}>PRESS HERE</button> */}
+          {/* <button
+            onClick={() => {
+              const viewport = cornerstone.getViewport(element);
+              console.log("🦁", viewport, element);
+              let prevViewport = { ...viewport, scale: 1 };
+              // console.log('🦁', viewport, element)
+              cornerstone.setViewport(element, prevViewport);
+            }}
+          >
+            PRESS HERE
+          </button> */}
           <CornerstoneViewport
             key={0}
             tools={tools}
@@ -85,16 +86,40 @@ const DicomViewer: React.FC<{
             className={"active"}
             activeTool={tool}
             loadingIndicatorComponent={DicomViewerLoader}
+            viewportOverlayComponent={ViewportOverlay}
+            scrollbarComponent={ImageScrollbar}
             onElementEnabled={(elementEnabledEvt: any) => {
               const cornerstoneElement = elementEnabledEvt.detail.element;
 
-              console.log(cornerstoneElement);
               setElement(cornerstoneElement);
+
+              cornerstoneElement.addEventListener(
+                "cornerstonenewimage",
+                (NewImageEvent: any) => {
+                  const viewport = NewImageEvent.detail.image;
+                  // set default window center, window width
+                  dispatch(
+                    setDefaultData({
+                      windowCenter: viewport.windowCenter,
+                      windowWidth: viewport.windowWidth,
+                    })
+                  );
+                }
+              );
+
+              cornerstoneElement.addEventListener(
+                "cornerstoneimagerendered",
+                (imageRenderedEvent: any) => {
+                  const viewport = imageRenderedEvent.detail.viewport;
+                  dispatch(changeScale(viewport.scale));
+                  dispatch(changeWc(viewport.voi.windowCenter));
+                  dispatch(changeWw(viewport.voi.windowWidth));
+                }
+              );
             }}
-            wc={wc}
-            ww={ww}
-            scale={scale}
-            ref={elRef}
+            wc={viewportData.voi.windowCenter}
+            ww={viewportData.voi.windowWidth}
+            scale={viewportData.scale}
           />
         </Styled.DicomViewer>
       ) : (

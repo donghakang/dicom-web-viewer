@@ -8,6 +8,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "./assets/styles/theme";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 
+
 initCornerstone();
 ReactDOM.render(
   <ThemeProvider theme={theme}>

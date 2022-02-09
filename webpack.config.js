@@ -49,6 +49,29 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
+        test: /\.less$/i,
+        use: [
+          {
+            loader: "style-loader",
+          },
+          {
+            loader: "css-loader", // translates CSS into CommonJS
+          },
+          {
+            loader: "less-loader", // compiles Less to CSS
+            options: {
+              lessOptions: {
+                // If you are using less-loader@5 please spread the lessOptions to options directly
+                modifyVars: {
+                  "primary-color": "#00b638",
+                },
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
+      },
+      {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
         type: "asset/resource",
       },
@@ -60,15 +83,15 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "main.[contenthash].js"
+    filename: "main.[contenthash].js",
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "public/index.html"),
-    })
+    }),
   ],
   mode: "development",
   stats: "errors-only",

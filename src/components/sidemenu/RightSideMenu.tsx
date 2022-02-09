@@ -32,8 +32,6 @@ const RightSideMenu: React.FC<RightSideMenuInterface> = ({ open }) => {
       initial="hidden"
       animate={open ? "visible" : "hidden"}
     >
-      {open ? "true" : "false"}
-      {/* {mode} */}
       {getToolTypeView()}
     </Styled.RightSideMenu>
   );
