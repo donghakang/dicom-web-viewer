@@ -7,9 +7,7 @@ ${normalize}
     :root {
         --letter-spacing-tighter: -0.05rem;
         --letter-spacign-tight: -0.025rem;
-        
-
-
+      
         --header-height: 44px;    // including progress bar
         --side-menu-width: 320px;
     }
@@ -30,10 +28,18 @@ ${normalize}
   h1, h2, h3{
       letter-spacing: var(--letter-spacing-tighter);
       font-weight: 800;
+      color: black;
   }
 
   span {
-      color: white;
+      color: #444;
+  }
+
+  button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background: none;
   }
 `;
 

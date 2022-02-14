@@ -16,5 +16,7 @@ export const theme: DefaultTheme = {
   color: {
     loadColor1: "#3fff7c",
     loadColor2: "#3ffbe0",
+    dark: '#4a4a4a',
+    gray: '#d6d6d6',
   },
 };

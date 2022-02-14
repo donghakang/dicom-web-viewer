@@ -41,12 +41,17 @@ const Header: React.FC<{
     if (type === "Scale") {
       setRightSideMenuOpened(true);
       // setRightSideMenuMode("Zoom");
-      dispatch(changeMode('Scale'))
+      dispatch(changeMode('Zoom'))
     }
     if (type === "Pan") {
       setRightSideMenuOpened(false);
       // setRightSideMenuMode(null);
       dispatch(changeMode('Pan'))
+    }
+    if (type === "Magnify") {
+      setRightSideMenuOpened(false);
+      // setRightSideMenuMode(null);
+      dispatch(changeMode('Magnify'))
     }
   }
 
@@ -76,6 +81,14 @@ const Header: React.FC<{
           </button>
         </li>
         <li>
+          <button onClick={(e) => handleToolClick(e, "Magnify")}>
+            <div className={"button-component"}>
+              <FaSearch size={24} />
+              {/* <span>Zoom</span> */}
+            </div>
+          </button>
+        </li>
+        <li>
           <button onClick={(e) => handleToolClick(e, "Pan")}>
             <div className={"button-component"}>
               <GrPan size={24} />
@@ -83,6 +96,7 @@ const Header: React.FC<{
             </div>
           </button>
         </li>
+
       </ul>
       <ul>
         <li>

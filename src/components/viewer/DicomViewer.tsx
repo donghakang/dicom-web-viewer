@@ -34,6 +34,11 @@ const DicomViewer: React.FC<{
       mode: "active",
       modeOptions: { mouseButtonMask: 4 },
     },
+    {
+      name: "Magnify",
+      mode: "active",
+      modeOptions: { mouseButtonMask: 1 },
+    },
     // Scroll
     { name: "StackScrollMouseWheel", mode: "active" },
     // Touch
@@ -66,18 +71,6 @@ const DicomViewer: React.FC<{
           initial="visible"
           animate={rightSideMenuOpened ? "hidden" : "visible"}
         >
-          {/* <button onClick={handleClick}>PRESS HERE</button> */}
-          {/* <button
-            onClick={() => {
-              const viewport = cornerstone.getViewport(element);
-              console.log("🦁", viewport, element);
-              let prevViewport = { ...viewport, scale: 1 };
-              // console.log('🦁', viewport, element)
-              cornerstone.setViewport(element, prevViewport);
-            }}
-          >
-            PRESS HERE
-          </button> */}
           <CornerstoneViewport
             key={0}
             tools={tools}
@@ -98,6 +91,7 @@ const DicomViewer: React.FC<{
                 (NewImageEvent: any) => {
                   const viewport = NewImageEvent.detail.image;
                   // set default window center, window width
+                  console.log('🚀', viewport)
                   dispatch(
                     setDefaultData({
                       windowCenter: viewport.windowCenter,

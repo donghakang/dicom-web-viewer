@@ -30,7 +30,7 @@ function getCompression(imageId: string) {
   return "Lossless / Uncompressed";
 }
 
-interface ViewportOverlayInterface {
+export interface ViewportOverlayInterface {
   scale: number;
   windowWidth: number;
   windowCenter: number;

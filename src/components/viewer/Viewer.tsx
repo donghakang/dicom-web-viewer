@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../header";
-import { RightSideMenu } from "../sidemenu";
+import { RightSideMenu, LeftSideMenu } from "../sidemenu";
 import DicomViewer from "./DicomViewer";
 
 import * as Styled from "./style";
@@ -22,11 +22,12 @@ const Viewer: React.FC<{ fileRef: React.RefObject<HTMLInputElement> }> = ({
         setLeftSideMenuOpened={setLeftSideMenuOpened}
       />
       <Styled.Viewer>
+        <LeftSideMenu open={rightSideMenuOpened} />
         <DicomViewer
           leftSideMenuOpened={leftSideMenuOpened}
           rightSideMenuOpened={rightSideMenuOpened}
         />
-        <RightSideMenu open={rightSideMenuOpened} />
+        {/* <RightSideMenu open={rightSideMenuOpened} /> */}
       </Styled.Viewer>
     </>
   );

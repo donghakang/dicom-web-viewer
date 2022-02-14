@@ -37,8 +37,7 @@ const ScaleMenu: React.FC = () => {
         </Col>
       </Row>
       <div>
-        <button onClick={(e) => console.log("preset")}>..</button>
-        <button onClick={(e) => console.log("preset")}>reset</button>
+        <button onClick={(e) => onChange(1)}>reset</button>
       </div>
     </div>
   );
