@@ -8,15 +8,37 @@ import DicomViewerLoader from "./DicomViewerLoader";
 import cornerstone from "cornerstone-core";
 
 import * as Styled from "./style";
-import { createPartiallyEmittedExpression } from "typescript";
 import ViewportOverlay from "./ViewportOverlay";
 import ImageScrollbar from "./ImageScrollbar";
-import { changeScale, changeWc, changeWw, setDefaultData } from "../../redux/reducers/toolSlice";
+import {
+  changeScale,
+  changeWc,
+  changeWw,
+  setDefaultData,
+} from "../../redux/reducers/toolSlice";
+import { useSideMenuState } from "../../context/menubar/MenubarContext";
 
-const DicomViewer: React.FC<{
-  leftSideMenuOpened: boolean;
-  rightSideMenuOpened: boolean;
-}> = ({ leftSideMenuOpened, rightSideMenuOpened }) => {
+const variants = {
+  opened: {
+    x: "var(--side-menu-width)",
+    width: "calc(100% - var(--side-menu-width) - var(--side-menu-width))",
+    transition: { ease: "easeInOut" },
+  },
+  rightOpened: {
+    x: 0,
+    width: "calc(100% - var(--side-menu-width))",
+    transition: { ease: "easeInOut" },
+  },
+  leftOpened: {
+    x: "var(--side-menu-width)",
+    width: "calc(100% - var(--side-menu-width))",
+    transition: { ease: "easeInOut" },
+  },
+  closed: { x: 0, width: "100%", transition: { ease: "easeInOut" } },
+};
+
+const DicomViewer: React.FC = () => {
+  const { leftSideMenuOpened, rightSideMenuOpened } = useSideMenuState();
   const [tools, setTools] = useState([
     // Mouse
     {
@@ -53,29 +75,31 @@ const DicomViewer: React.FC<{
 
   const [element, setElement] = useState(null);
 
-  const variants = {
-    hidden: {
-      width: "calc(100% - var(--side-menu-width)",
-      transition: { ease: "easeInOut" },
-    },
-    // You can do whatever you want here, if you just want it to stop completely use `rotate: 0`
-    visible: { width: "100%", transition: { ease: "easeInOut" } },
-  };
-
-
   return (
     <>
       {images.length > 0 ? (
         <Styled.DicomViewer
           variants={variants}
-          initial="visible"
-          animate={rightSideMenuOpened ? "hidden" : "visible"}
+          initial="closed"
+          animate={
+            rightSideMenuOpened
+              ? leftSideMenuOpened
+                ? "opened"
+                : "rightOpened"
+              : leftSideMenuOpened
+              ? "leftOpened"
+              : "closed"
+          }
         >
           <CornerstoneViewport
             key={0}
             tools={tools}
             style={{ width: "100%", height: "100%" }}
-            imageIds={images.map((image) => image.imageId)}
+            imageIds={images
+              .filter((image) => image.series.seriesNumber === 2)
+              .map((image) => {
+                return image.imageId;
+              })}
             className={"active"}
             activeTool={tool}
             loadingIndicatorComponent={DicomViewerLoader}
@@ -91,7 +115,6 @@ const DicomViewer: React.FC<{
                 (NewImageEvent: any) => {
                   const viewport = NewImageEvent.detail.image;
                   // set default window center, window width
-                  console.log('🚀', viewport)
                   dispatch(
                     setDefaultData({
                       windowCenter: viewport.windowCenter,

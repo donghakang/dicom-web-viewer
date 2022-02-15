@@ -1,13 +1,9 @@
 import React from "react";
 import * as Styled from "./style";
-import * as cornerstone from "cornerstone-core";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import WwwcMenu from "./WwwcMenu";
 import ScaleMenu from "./ScaleMenu";
-
-interface RightSideMenuInterface {
-  open: boolean;
-}
+import { useSideMenuState } from "../../context/menubar/MenubarContext";
 
 const variants = {
   hidden: { x: "320px", transition: { ease: "easeInOut" } },
@@ -15,7 +11,8 @@ const variants = {
   visible: { x: "0px", transition: { ease: "easeInOut" } },
 };
 
-const RightSideMenu: React.FC<RightSideMenuInterface> = ({ open }) => {
+const RightSideMenu: React.FC = () => {
+  const { rightSideMenuOpened } = useSideMenuState();
   const toolType = useAppSelector((state) => state.toolType);
 
   function getToolTypeView() {
@@ -30,7 +27,7 @@ const RightSideMenu: React.FC<RightSideMenuInterface> = ({ open }) => {
     <Styled.RightSideMenu
       variants={variants}
       initial="hidden"
-      animate={open ? "visible" : "hidden"}
+      animate={rightSideMenuOpened ? "visible" : "hidden"}
     >
       {getToolTypeView()}
     </Styled.RightSideMenu>

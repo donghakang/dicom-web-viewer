@@ -5,6 +5,7 @@ import "./App.css";
 import Viewer from "./components/viewer/Viewer";
 import ProgressBar from "./components/loader";
 import FileLoader from "./components/fileloader";
+import { SeriesProvider } from "./context/series/SeriesContext";
 
 const App: React.FC = () => {
   // File Loader
@@ -12,11 +13,11 @@ const App: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
 
   return (
-    <div>
+    <SeriesProvider>
       <ProgressBar files={files} />
       <Viewer fileRef={fileRef} />
       <FileLoader fileRef={fileRef} files={files} setFiles={setFiles} />
-    </div>
+    </SeriesProvider>
   );
 };
 

@@ -9,7 +9,7 @@ const store = configureStore({
     imageLoader: imageReducer,
     toolType: toolReducer,
   },
-  middleware:  (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  // middleware:  (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

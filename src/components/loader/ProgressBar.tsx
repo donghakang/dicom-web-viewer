@@ -19,11 +19,11 @@ import {
   getDicomRows,
   dicomDateTimeToLocale,
 } from "../helper/dicom_reader";
-import { CornerstoneImageInterface } from "../../@types/CornerstoneImageInterface";
-import { useDispatch } from "react-redux";
 import { setImages } from "../../redux/reducers/imageSlice";
-import { useAppDispatch } from "../../redux/hooks";
-import * as Styled from './style'
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import * as Styled from "./style";
+import { convertToFalseColorImage } from "cornerstone-core";
+import { useSeriesDispatch } from "../../context/series/SeriesContext";
 
 interface ProgressInterface {
   files: File[];
@@ -31,10 +31,11 @@ interface ProgressInterface {
 
 const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
   const [progress, setProgress] = useState<number>(0);
-  const step = 100 / files.length
+  const step = 100 / files.length;
   const dispatch = useAppDispatch();
+  const seriesDispatch = useSeriesDispatch();
 
-  function loadWADOImages(files: File[]) {
+  async function loadWADOImages(files: File[]) {
     let imageIds: any[] = [];
     let items: any[] = [];
     for (let i = 0; i < files.length; i++) {
@@ -42,84 +43,96 @@ const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
       imageIds.push(cornerstoneWADOImageLoader.wadouri.fileManager.add(file));
     }
     for (let i = 0; i < files.length; i++) {
-      cornerstone
-        .loadImage(imageIds[i])
-        .then((image: any) => {
-          const patientName = getDicomPatientName(image);
+      const image = await cornerstone.loadImage(imageIds[i]);
+      const patientName = getDicomPatientName(image);
 
-          const studyId = getDicomStudyId(image);
-          const studyDate = getDicomStudyDate(image);
-          const studyTime = getDicomStudyTime(image);
-          const studyDescription = getDicomStudyDescription(image);
+      const studyId = getDicomStudyId(image);
+      const studyDate = getDicomStudyDate(image);
+      const studyTime = getDicomStudyTime(image);
+      const studyDescription = getDicomStudyDescription(image);
 
-          const seriesDate = getDicomSeriesDate(image);
-          const seriesTime = getDicomSeriesTime(image);
-          const seriesDescription = getDicomSeriesDescription(image);
-          const seriesNumber = getDicomSeriesNumber(image);
+      const seriesDate = getDicomSeriesDate(image);
+      const seriesTime = getDicomSeriesTime(image);
+      const seriesDescription = getDicomSeriesDescription(image);
+      const seriesNumber = getDicomSeriesNumber(image);
 
-          const instanceNumber = getDicomInstanceNumber(image);
-          const sliceDistance = getDicomSliceDistance(image);
-          const echoNumber = getDicomEchoNumber(image);
-          const sliceLocation = getDicomSliceLocation(image);
-          const columns = getDicomColumns(image);
-          const rows = getDicomRows(image);
+      const instanceNumber = getDicomInstanceNumber(image);
+      const sliceDistance = getDicomSliceDistance(image);
+      const echoNumber = getDicomEchoNumber(image);
+      const sliceLocation = getDicomSliceLocation(image);
+      const columns = getDicomColumns(image);
+      const rows = getDicomRows(image);
 
-          const studyDateTime =
-            studyDate === undefined
-              ? undefined
-              : dicomDateTimeToLocale(`${studyDate}.${studyTime}`);
+      const studyDateTime =
+        studyDate === undefined
+          ? undefined
+          : dicomDateTimeToLocale(`${studyDate}.${studyTime}`);
 
-          const dicomInfo = {
-            imageId: imageIds[i],
-            instanceNumber: instanceNumber,
-            name: files[i].name,
-            image: image,
-            rows: rows,
-            columns: columns,
-            sliceDistance: sliceDistance,
-            sliceLocation: sliceLocation,
-            patient: {
-              patientName: patientName,
-            },
-            study: {
-              studyId: studyId,
-              studyDate: studyDate,
-              studyTime: studyTime,
-              studyDateTime: studyDateTime,
-              studyDescription: studyDescription,
-            },
-            series: {
-              seriesDate: seriesDate,
-              seriesTime: seriesTime,
-              seriesDescription: seriesDescription,
-              seriesNumber: seriesNumber,
-              echoNumber: echoNumber,
-            },
-          };
+      const dicomInfo = {
+        imageId: imageIds[i],
+        instanceNumber: instanceNumber,
+        name: files[i].name,
+        image: image,
+        rows: rows,
+        columns: columns,
+        sliceDistance: sliceDistance,
+        sliceLocation: sliceLocation,
+        patient: {
+          patientName: patientName,
+        },
+        study: {
+          studyId: studyId,
+          studyDate: studyDate,
+          studyTime: studyTime,
+          studyDateTime: studyDateTime,
+          studyDescription: studyDescription,
+        },
+        series: {
+          seriesDate: seriesDate,
+          seriesTime: seriesTime,
+          seriesDescription: seriesDescription,
+          seriesNumber: seriesNumber,
+          echoNumber: echoNumber,
+        },
+      };
 
-          return dicomInfo;
-        })
-        .then((dicomInfo: object) => {
-          items.push(dicomInfo);
-          setProgress(prev => prev + step)
-        })
-        .then(() => {
-          if (items.length === files.length) {
+      items.push(dicomInfo);
+      setProgress((prev) => prev + step);
 
-            items.sort((l, r) => {
-              return l.instanceNumber - r.instanceNumber
-            })
-            dispatch(setImages(items))
-            setProgress(0)
-          }
-        });
+      console.log('🚜')
     }
-    return items;
+
+    console.log('🧘🏿‍♂️')
+    items.sort((l, r) => {
+      return l.instanceNumber - r.instanceNumber;
+    });
+
+    dispatch(setImages(items));
+
+    console.log('😅')
+    // series sort
+    const allSeries = Array.from(
+      new Set(items.map((item) => item.series.seriesNumber))
+    ).sort();
+    const currentSeries = allSeries[0];
+    const seriesInfo = allSeries.map((series) => {
+      return {
+        seriesNumber: series,
+        countImages: items.filter((item) => item.series.seriesNumber === series)
+          .length,
+      };
+    });
+
+    console.log(allSeries, currentSeries, seriesInfo);
+    seriesDispatch({type: 'SET_CURRENT_SERIES', currentSeries: currentSeries})
+    seriesDispatch({type: 'SET_SERIES', series: seriesInfo});
+
+    setProgress(0);
+    console.log('🧬')
   }
 
   useEffect(() => {
-    const items = loadWADOImages(files);
-    console.log(items)
+    loadWADOImages(files);
   }, [files]);
 
   return <Styled.ProgressBar progress={progress}></Styled.ProgressBar>;

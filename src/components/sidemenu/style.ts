@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 
 export const RightSideMenu = styled(motion.div)`
   position: fixed;
-
   top: var(--header-height);
   right: 0;
 
@@ -27,7 +26,7 @@ export const RightSideMenu = styled(motion.div)`
 export const LeftSideMenu = styled(motion.div)`
   position: fixed;
   top: var(--header-height);
-  right: 0;
+  left: 0;
 
   width: var(--side-menu-width);
   height: calc(100% - var(--header-height));

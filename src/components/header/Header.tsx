@@ -7,19 +7,14 @@ import { BsCircleHalf, BsGridFill } from "react-icons/bs";
 
 import { useAppDispatch } from "../../redux/hooks";
 import { changeMode } from "../../redux/reducers/toolSlice";
+import { useSideMenuDispatch } from "../../context/menubar/MenubarContext";
 
 const Header: React.FC<{
   useRef: React.RefObject<HTMLInputElement>;
   setTool: React.Dispatch<React.SetStateAction<string>>;
-  setRightSideMenuOpened: React.Dispatch<React.SetStateAction<boolean>>;
-  setLeftSideMenuOpened: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({
-  useRef,
-  setTool,
-  setRightSideMenuOpened,
-  setLeftSideMenuOpened,
-}) => {
+}> = ({ useRef, setTool }) => {
   const dispatch = useAppDispatch();
+  const sideMenuDispatch = useSideMenuDispatch();
 
   function handleLoadClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     if (useRef.current !== null) {
@@ -34,34 +29,48 @@ const Header: React.FC<{
   ) {
     setTool(type);
     if (type === "Wwwc") {
-      setRightSideMenuOpened(true);
+      sideMenuDispatch({ type: "RIGHT_OPEN" });
       // setRightSideMenuMode("Wwwc");
-      dispatch(changeMode('Wwwc'))
+      dispatch(changeMode("Wwwc"));
     }
     if (type === "Scale") {
-      setRightSideMenuOpened(true);
+      sideMenuDispatch({ type: "RIGHT_OPEN" });
       // setRightSideMenuMode("Zoom");
-      dispatch(changeMode('Zoom'))
+      dispatch(changeMode("Zoom"));
     }
     if (type === "Pan") {
-      setRightSideMenuOpened(false);
+      sideMenuDispatch({ type: "RIGHT_CLOSE" });
       // setRightSideMenuMode(null);
-      dispatch(changeMode('Pan'))
+      dispatch(changeMode("Pan"));
     }
     if (type === "Magnify") {
-      setRightSideMenuOpened(false);
+      sideMenuDispatch({ type: "RIGHT_CLOSE" });
       // setRightSideMenuMode(null);
-      dispatch(changeMode('Magnify'))
+      dispatch(changeMode("Magnify"));
     }
   }
 
+
+  function handleToggleLeftSideMenu() {
+    sideMenuDispatch({ type: "LEFT_TRIGGER" });
+  }
+
   function handleToggleRightSideMenu() {
-    setRightSideMenuOpened((prev) => !prev);
+    sideMenuDispatch({ type: "RIGHT_TRIGGER" });
   }
 
   return (
     <Styled.Header>
       <ul>
+        <li>
+          <button onClick={handleToggleLeftSideMenu}>
+            <div className={"button-component"}>
+              <BsGridFill size={24} />
+              {/* <span>Threshold</span> */}
+            </div>
+          </button>
+        </li>
+
         <li>
           <button onClick={handleLoadClick}>
             <div className={"button-component"}>
@@ -70,8 +79,6 @@ const Header: React.FC<{
             </div>
           </button>
         </li>
-      </ul>
-      <ul>
         <li>
           <button onClick={(e) => handleToolClick(e, "Scale")}>
             <div className={"button-component"}>
@@ -97,8 +104,6 @@ const Header: React.FC<{
           </button>
         </li>
 
-      </ul>
-      <ul>
         <li>
           <button onClick={(e) => handleToolClick(e, "Wwwc")}>
             <div className={"button-component"}>
@@ -107,8 +112,6 @@ const Header: React.FC<{
             </div>
           </button>
         </li>
-      </ul>
-      <ul>
         <li>
           <button onClick={(e) => console.log("grid")}>
             <div className={"button-component"}>
