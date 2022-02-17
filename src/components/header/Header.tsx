@@ -2,12 +2,21 @@ import React from "react";
 import * as Styled from "./style";
 
 import { FaLungs, FaSearch } from "react-icons/fa";
-import { GrPan } from "react-icons/gr";
-import { BsCircleHalf, BsGridFill } from "react-icons/bs";
+import {
+  BsCircleHalf,
+  BsGridFill,
+  BsInfoCircleFill,
+  BsArrowsMove,
+  BsFillMenuButtonFill,
+} from "react-icons/bs";
+import { BiMenuAltRight } from "react-icons/bi";
+import { IconContext } from "react-icons";
 
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { changeMode } from "../../redux/reducers/toolSlice";
 import { useSideMenuDispatch } from "../../context/menubar/MenubarContext";
+import { useSeriesState } from "../../context/series/SeriesContext";
+import { theme } from "../../assets/styles/theme";
 
 const Header: React.FC<{
   useRef: React.RefObject<HTMLInputElement>;
@@ -15,6 +24,8 @@ const Header: React.FC<{
 }> = ({ useRef, setTool }) => {
   const dispatch = useAppDispatch();
   const sideMenuDispatch = useSideMenuDispatch();
+  const images = useAppSelector((state) => state.imageLoader.images);
+  const { currentSeries, series } = useSeriesState();
 
   function handleLoadClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     if (useRef.current !== null) {
@@ -48,8 +59,11 @@ const Header: React.FC<{
       // setRightSideMenuMode(null);
       dispatch(changeMode("Magnify"));
     }
+    if (type === "Info") {
+      sideMenuDispatch({ type: "RIGHT_OPEN" });
+      dispatch(changeMode("Info"));
+    }
   }
-
 
   function handleToggleLeftSideMenu() {
     sideMenuDispatch({ type: "LEFT_TRIGGER" });
@@ -59,78 +73,125 @@ const Header: React.FC<{
     sideMenuDispatch({ type: "RIGHT_TRIGGER" });
   }
 
-  return (
-    <Styled.Header>
+  function loadingCornerstoneViewport() {
+    return images.length > 0 && series.length > 0;
+  }
+
+  function loadedHeader() {
+    return (
       <ul>
         <li>
-          <button onClick={handleToggleLeftSideMenu}>
-            <div className={"button-component"}>
-              <BsGridFill size={24} />
-              {/* <span>Threshold</span> */}
-            </div>
-          </button>
-        </li>
-
-        <li>
           <button onClick={handleLoadClick}>
-            <div className={"button-component"}>
+            <IconContext.Provider
+              value={{
+                className: "button-component",
+              }}
+            >
               <FaLungs size={24} />
-              {/* <span>Load</span> */}
-            </div>
+            </IconContext.Provider>
           </button>
         </li>
         <li>
           <button onClick={(e) => handleToolClick(e, "Scale")}>
-            <div className={"button-component"}>
+            <IconContext.Provider
+              value={{
+                className: "button-component",
+              }}
+            >
               <FaSearch size={24} />
-              {/* <span>Zoom</span> */}
-            </div>
+            </IconContext.Provider>
           </button>
         </li>
         <li>
           <button onClick={(e) => handleToolClick(e, "Magnify")}>
-            <div className={"button-component"}>
+            <IconContext.Provider
+              value={{
+                className: "button-component",
+              }}
+            >
               <FaSearch size={24} />
-              {/* <span>Zoom</span> */}
-            </div>
+            </IconContext.Provider>
           </button>
         </li>
         <li>
           <button onClick={(e) => handleToolClick(e, "Pan")}>
-            <div className={"button-component"}>
-              <GrPan size={24} />
-              {/* <span>Pan</span> */}
-            </div>
+            <IconContext.Provider
+              value={{
+                className: "button-component",
+              }}
+            >
+              <BsArrowsMove size={24} />
+            </IconContext.Provider>
           </button>
         </li>
 
         <li>
           <button onClick={(e) => handleToolClick(e, "Wwwc")}>
-            <div className={"button-component"}>
+            <IconContext.Provider
+              value={{
+                className: "button-component",
+              }}
+            >
               <BsCircleHalf size={24} />
-              {/* <span>Threshold</span> */}
-            </div>
+            </IconContext.Provider>
           </button>
         </li>
         <li>
-          <button onClick={(e) => console.log("grid")}>
-            <div className={"button-component"}>
-              <BsGridFill size={24} />
-              {/* <span>Threshold</span> */}
-            </div>
+          <button onClick={(e) => handleToolClick(e, "Info")}>
+            <IconContext.Provider
+              value={{
+                className: "button-component",
+              }}
+            >
+              <BsInfoCircleFill size={24} />
+            </IconContext.Provider>
           </button>
         </li>
       </ul>
+    );
+  }
+
+  function unloadedHeader() {
+    return (
       <ul>
         <li>
-          <button onClick={handleToggleRightSideMenu}>
-            <div className={"button-component"}>
-              <BsGridFill size={24} />
-              {/* <span>Threshold</span> */}
-            </div>
+          <button onClick={handleLoadClick}>
+            <IconContext.Provider
+              value={{
+                className: "button-component",
+              }}
+            >
+              <FaLungs size={24} />
+            </IconContext.Provider>
           </button>
         </li>
       </ul>
+    );
+  }
+
+  return (
+    <Styled.Header>
+      <div style={{ height: "40px" }} className="button-container">
+        {loadingCornerstoneViewport() ? loadedHeader() : unloadedHeader()}
+      </div>
+      {loadingCornerstoneViewport() && (
+        <div className="menu-button-container">
+          <button onClick={handleToggleLeftSideMenu}>
+            <BsFillMenuButtonFill size={16} />
+          </button>
+          <button onClick={handleToggleRightSideMenu}>
+            <BiMenuAltRight size={16} />
+          </button>
+        </div>
+      )}
+      {/* <div className="menu-button-container">
+        <button onClick={handleToggleLeftSideMenu}>
+          <BsFillMenuButtonFill size={16} />
+        </button>
+        <button onClick={handleToggleRightSideMenu}>
+          <BiMenuAltRight size={16} />
+        </button>
+      </div> */}
     </Styled.Header>
   );
 };

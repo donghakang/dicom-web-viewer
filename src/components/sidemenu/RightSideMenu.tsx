@@ -4,10 +4,10 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import WwwcMenu from "./WwwcMenu";
 import ScaleMenu from "./ScaleMenu";
 import { useSideMenuState } from "../../context/menubar/MenubarContext";
+import InfoMenu from "./InfoMenu";
 
 const variants = {
   hidden: { x: "320px", transition: { ease: "easeInOut" } },
-  // You can do whatever you want here, if you just want it to stop completely use `rotate: 0`
   visible: { x: "0px", transition: { ease: "easeInOut" } },
 };
 
@@ -18,6 +18,8 @@ const RightSideMenu: React.FC = () => {
   function getToolTypeView() {
     if (toolType.tool === "Wwwc") {
       return <WwwcMenu />;
+    } else if (toolType.tool === 'Info') {
+      return <InfoMenu /> 
     } else {
       return <ScaleMenu />;
     }

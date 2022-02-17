@@ -63,7 +63,7 @@ export const ImageScrollbar = styled.div`
   .scroll-holder .imageSlider::-webkit-slider-thumb {
     -webkit-appearance: none !important;
     /* background-color: #163239; */
-    background-color: ${({ theme }) => theme.color.loadColor1};;
+    background-color: ${({ theme }) => theme.color.primary};;
     border: none;
     border-radius: 57px;
     cursor: -webkit-grab;

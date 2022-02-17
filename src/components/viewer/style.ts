@@ -25,6 +25,6 @@ export const DicomViewerLoader = styled.div`
 
   .loader-text {
     margin-top: 8px;
-    color: ${(props) => props.theme.color.loadColor1};
+    color: ${(props) => props.theme.color.primary};
   }
 `;

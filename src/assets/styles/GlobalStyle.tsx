@@ -8,14 +8,28 @@ ${normalize}
         --letter-spacing-tighter: -0.05rem;
         --letter-spacign-tight: -0.025rem;
       
-        --header-height: 44px;    // including progress bar
-        --side-menu-width: 320px;
+        --font-weight-heavy: 700;
+
+        --header-height: 84px;    // including progress bar
+        --right-side-menu-width: 320px;
+        --left-side-menu-width: 280px;
+
+
+        --dark-background: #2c2f31;
+        --light-background: #55585a;
+
+        --load-color1: #00E0C7;
+        --load-color2: #009394;
+        --load-color3: #006270;
+        --text-color: #ffffff;
+        --span-color: #999;
     }
 
   html, body {
+
     margin: 0;
     font-family: Inter, sans-serif;
-    background-color: gray;
+    background-color: var(--dark-background);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -28,11 +42,11 @@ ${normalize}
   h1, h2, h3{
       letter-spacing: var(--letter-spacing-tighter);
       font-weight: 800;
-      color: black;
+      color: var(--text-color)
   }
 
   span {
-      color: #444;
+      color: var(--span-color)
   }
 
   button {

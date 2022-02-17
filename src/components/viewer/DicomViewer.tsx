@@ -17,21 +17,22 @@ import {
   setDefaultData,
 } from "../../redux/reducers/toolSlice";
 import { useSideMenuState } from "../../context/menubar/MenubarContext";
+import { useSeriesState } from "../../context/series/SeriesContext";
 
 const variants = {
   opened: {
-    x: "var(--side-menu-width)",
-    width: "calc(100% - var(--side-menu-width) - var(--side-menu-width))",
+    x: "var(--left-side-menu-width)",
+    width: "calc(100% - var(--right-side-menu-width) - var(--left-side-menu-width))",
     transition: { ease: "easeInOut" },
   },
   rightOpened: {
     x: 0,
-    width: "calc(100% - var(--side-menu-width))",
+    width: "calc(100% - var(--right-side-menu-width))",
     transition: { ease: "easeInOut" },
   },
   leftOpened: {
-    x: "var(--side-menu-width)",
-    width: "calc(100% - var(--side-menu-width))",
+    x: "var(--left-side-menu-width)",
+    width: "calc(100% - var(--left-side-menu-width))",
     transition: { ease: "easeInOut" },
   },
   closed: { x: 0, width: "100%", transition: { ease: "easeInOut" } },
@@ -71,13 +72,19 @@ const DicomViewer: React.FC = () => {
 
   const images = useAppSelector((state) => state.imageLoader.images);
   const { tool, viewportData } = useAppSelector((state) => state.toolType);
+  const { currentSeries, series } = useSeriesState();
   const dispatch = useAppDispatch();
 
   const [element, setElement] = useState(null);
 
+
+  function loadingCornerstoneViewport() {
+    return images.length > 0 && series.length > 0
+  }
+
   return (
     <>
-      {images.length > 0 ? (
+      {loadingCornerstoneViewport() ? (
         <Styled.DicomViewer
           variants={variants}
           initial="closed"
@@ -96,7 +103,7 @@ const DicomViewer: React.FC = () => {
             tools={tools}
             style={{ width: "100%", height: "100%" }}
             imageIds={images
-              .filter((image) => image.series.seriesNumber === 2)
+              .filter((image) => image.series.seriesNumber === currentSeries)
               .map((image) => {
                 return image.imageId;
               })}

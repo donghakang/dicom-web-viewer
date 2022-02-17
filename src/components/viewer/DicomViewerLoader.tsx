@@ -7,7 +7,7 @@ function DicomViewerLoader() {
   return (
     <Styled.DicomViewerLoader>
       <div className={"grid-loader"}>
-        <GridLoader size={15} margin={2} color={theme.color.loadColor1} />
+        <GridLoader size={15} margin={2} color={theme.color.primary} />
       </div>
       <div className={"loader-text"}>Loading ...</div>
     </Styled.DicomViewerLoader>

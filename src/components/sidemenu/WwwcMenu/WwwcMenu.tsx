@@ -8,36 +8,58 @@ import {
   changeWw,
 } from "../../../redux/reducers/toolSlice";
 
+import { Box, Grid } from "@mui/material";
+import { CustomSlider, Input } from "../../../assets/styles/mui-style";
+
 const Ww: React.FC = () => {
   const tools = useAppSelector((state) => state.toolType.viewportData);
   const dispatch = useAppDispatch();
 
-  function onChange(value: number) {
+  function onSlideChange(
+    event: Event | React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    value: number
+  ) {
     dispatch(changeWw(value));
   }
 
+  function onInputChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    //TODO: change 1 to default value
+    const val = event.target.value === "" ? 1 : Number(event.target.value);
+    dispatch(changeWw(val));
+  }
+
   return (
-    <Row>
-      <Col span={12}>
-        <Slider
-          min={0}
-          max={4000}
-          onChange={onChange}
-          value={tools.voi.windowWidth}
-          step={1}
-        />
-      </Col>
-      <Col span={4}>
-        <InputNumber
-          min={0}
-          max={4000}
-          style={{ margin: "0 16px" }}
-          step={1}
-          value={tools.voi.windowWidth}
-          onChange={onChange}
-        />
-      </Col>
-    </Row>
+    <Box width="100%">
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs>
+          <CustomSlider
+            min={0}
+            max={4000}
+            step={1}
+            onChange={(e, v, a) => onSlideChange(e, v as number)}
+            aria-label="Default"
+            valueLabelDisplay="auto"
+            value={tools.voi.windowWidth}
+          />
+        </Grid>
+        <Grid item>
+          <Input
+            value={tools.voi.windowWidth}
+            size="small"
+            onChange={onInputChange}
+            inputProps={{
+              step: 1,
+              min: 0,
+              max: 4000,
+              type: "number",
+              "aria-labelledby": "input-slider",
+            }}
+          />
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
@@ -45,32 +67,50 @@ const Wc: React.FC = () => {
   const tools = useAppSelector((state) => state.toolType.viewportData);
   const dispatch = useAppDispatch();
 
-  function onChange(value: number) {
+  function onSlideChange(
+    event: Event | React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    value: number
+  ) {
     dispatch(changeWc(value));
   }
 
+  function onInputChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const val = event.target.value === "" ? 1 : Number(event.target.value);
+    dispatch(changeWc(val));
+  }
+
   return (
-    <Row>
-      <Col span={12}>
-        <Slider
-          min={-4000}
-          max={4000}
-          onChange={onChange}
-          value={tools.voi.windowCenter}
-          step={1}
-        />
-      </Col>
-      <Col span={4}>
-        <InputNumber
-          min={-4000}
-          max={4000}
-          style={{ margin: "0 16px" }}
-          step={1}
-          value={tools.voi.windowCenter}
-          onChange={onChange}
-        />
-      </Col>
-    </Row>
+    <Box width="100%">
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs>
+          <CustomSlider
+            min={-4000}
+            max={4000}
+            step={1}
+            onChange={(e, v, a) => onSlideChange(e, v as number)}
+            aria-label="Default"
+            valueLabelDisplay="auto"
+            value={tools.voi.windowCenter}
+          />
+        </Grid>
+        <Grid item>
+          <Input
+            value={tools.voi.windowCenter}
+            size="small"
+            onChange={onInputChange}
+            inputProps={{
+              step: 1,
+              min: -4000,
+              max: 4000,
+              type: "number",
+              "aria-labelledby": "input-slider",
+            }}
+          />
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
@@ -84,7 +124,7 @@ const WwwcMenu: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="content-container">
       Window: <Ww />
       Level: <Wc />
       <div>

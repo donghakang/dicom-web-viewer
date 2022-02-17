@@ -1,39 +1,79 @@
 import styled from "styled-components";
 
 export const Header = styled.nav`
-  margin-top: 4px;
-  height: 40px;
-  background-color: #333;
+  padding-top: 4px;
+  height: var(--header-height);
+  background-color: var(--dark-background);
+  /* border-bottom: 1px solid ${({ theme }) => theme.color.primary3};
+   */
+  
   display: flex;
+  flex-direction: column;
 
-  ul {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    display: flex;
-    margin-left: 20px;
+  div{
+    height: 40px;
+    border-bottom: 1px solid #ffffffbb;
+    
+  }
 
-    li {
-      list-style-type: none;
+  .button-container {
+    border-bottom: 1px solid #ffffff55;
+    padding-left: 20px;
+    ul {
       margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
 
-      button {
-        height: 100%;
+      li {
+        list-style-type: none;
+        margin: 0;
 
-        .button-component {
-          display: flex;
-          flex-direction: column;
+        button {
+          height: 100%;
 
-          * {
-            margin: auto;
+          .button-component {
+            transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);;
+            color: ${({ theme }) => theme.color.primary2};
+
+            * {
+              margin: auto;
+            }
+          }
+
+          .button-component:hover {
+            color: ${({ theme }) => theme.color.primary};
           }
         }
       }
-    }
 
-    // 2nd ul
-    &:nth-child(1) {
-      margin-left: 0px;
+      // 2nd ul
+      &:nth-child(1) {
+        margin-left: 0px;
+      }
+    }
+  }
+
+  .menu-button-container {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      width: 80px;
+      height: 24px;
+      border-radius: 10px;
+      background-color: ${({ theme }) => theme.color.primary2};
+      transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+      margin: auto 12px;
+
+      svg {
+        margin: auto;
+        fill: #333;
+      }
+
+      &:hover {
+        background-color: ${({ theme }) => theme.color.primary};
+      }
     }
   }
 `;

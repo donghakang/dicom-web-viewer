@@ -4,6 +4,7 @@ type SeriesState = {
   currentSeries: number;
   series: {
     seriesNumber: number;
+    seriesDescription: string;
     countImages: number;
   }[];
 };
@@ -13,11 +14,12 @@ type SeriesAction = {
   currentSeries: number;
 } | {
   type: "SET_SERIES";
-  series: {seriesNumber: number, countImages: number}[];
+  series: {seriesNumber: number, seriesDescription: string, countImages: number}[];
 };
 
 const initState = {
   currentSeries: 0,
+  seriesDescription: '',
   series: [],
 };
 
@@ -29,13 +31,11 @@ const SeriesDispatchContext = createContext<SeriesDispatch | null>(null);
 function SeriesReducer(state: SeriesState, action: SeriesAction): SeriesState {
   switch (action.type) {
     case "SET_CURRENT_SERIES":
-      console.log('SET CURRENT SERIES')
       return {
         ...state,
         currentSeries: action.currentSeries
       }
     case "SET_SERIES":
-      console.log('SET SERIES', action)
       return {
         ...state,
         series: action.series,

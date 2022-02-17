@@ -5,7 +5,7 @@ export const ViewportOverlay = styled.div`
     display: none;
   }
   
-  color: ${({ theme }) => theme.color.loadColor1};
+  color: ${({ theme }) => theme.color.primary};
 
   .overlay-element {
     position: absolute;

@@ -99,36 +99,44 @@ const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
       items.push(dicomInfo);
       setProgress((prev) => prev + step);
 
-      console.log('🚜')
+      console.log("🚜", dicomInfo);
     }
 
-    console.log('🧘🏿‍♂️')
     items.sort((l, r) => {
       return l.instanceNumber - r.instanceNumber;
     });
 
     dispatch(setImages(items));
 
-    console.log('😅')
     // series sort
-    const allSeries = Array.from(
-      new Set(items.map((item) => item.series.seriesNumber))
-    ).sort();
-    const currentSeries = allSeries[0];
-    const seriesInfo = allSeries.map((series) => {
+    const allSeriesInfo = items
+      .filter(
+        (value, index, self) =>
+          index ===
+          self.findIndex(
+            (t) => t.series.seriesNumber === value.series.seriesNumber
+          )
+      )
+      .sort((a, b) => a.series.seriesNumber - b.series.seriesNumber);
+
+    const currentSeries = allSeriesInfo[0].series.seriesNumber;
+    const seriesInfo = allSeriesInfo.map((series) => {
       return {
-        seriesNumber: series,
-        countImages: items.filter((item) => item.series.seriesNumber === series)
-          .length,
+        seriesNumber: series.series.seriesNumber,
+        seriesDescription: series.series.seriesDescription,
+        countImages: items.filter(
+          (item) => item.series.seriesNumber === series.series.seriesNumber
+        ).length,
       };
     });
 
-    console.log(allSeries, currentSeries, seriesInfo);
-    seriesDispatch({type: 'SET_CURRENT_SERIES', currentSeries: currentSeries})
-    seriesDispatch({type: 'SET_SERIES', series: seriesInfo});
+    seriesDispatch({
+      type: "SET_CURRENT_SERIES",
+      currentSeries: currentSeries,
+    });
+    seriesDispatch({ type: "SET_SERIES", series: seriesInfo });
 
     setProgress(0);
-    console.log('🧬')
   }
 
   useEffect(() => {

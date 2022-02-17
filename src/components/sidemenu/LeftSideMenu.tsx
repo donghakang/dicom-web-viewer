@@ -6,6 +6,7 @@ import DicomViewerLoader from "../viewer/DicomViewerLoader";
 import { ViewportOverlayInterface } from "../viewer/ViewportOverlay/ViewportOverlay";
 import { useSideMenuState } from "../../context/menubar/MenubarContext";
 import { useSeriesState } from "../../context/series/SeriesContext";
+import SeriesComponent from "./SeriesMenu/SeriesComponent";
 
 const variants = {
   hidden: { x: "-320px", transition: { ease: "easeInOut" } },
@@ -19,7 +20,6 @@ const LeftSideMenu: React.FC = () => {
   const toolType = useAppSelector((state) => state.toolType);
   const images = useAppSelector((state) => state.imageLoader.images);
 
-
   return (
     <Styled.LeftSideMenu
       variants={variants}
@@ -28,29 +28,10 @@ const LeftSideMenu: React.FC = () => {
     >
       {images.length > 0 ? (
         series.map((seriesInfo) => (
-          <div
-            style={{ width: "280px", height: "200px", borderRadius: "10px" }}
-          >
-            <div style={{ width: "100%", height: "100%" }}>
-              <CornerstoneViewport
-                key={0}
-                style={{ width: "100%", height: "100%" }}
-                imageIds={[
-                  images.filter(
-                    (image) =>
-                      image.series.seriesNumber === seriesInfo.seriesNumber
-                  )[0].imageId,
-                ]}
-                tools={[]}
-                viewportOverlayComponent={(props: ViewportOverlayInterface) => (
-                  <></>
-                )}
-              />
-            </div>
-            <div>
-                Series Number: {seriesInfo.seriesNumber} &nbsp; Images: {seriesInfo.countImages}
-            </div>
-          </div>
+          <SeriesComponent
+            key={seriesInfo.seriesNumber}
+            seriesInfo={seriesInfo}
+          />
         ))
       ) : (
         <div>???</div>

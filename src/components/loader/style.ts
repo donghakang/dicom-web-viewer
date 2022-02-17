@@ -16,5 +16,5 @@ export const ProgressBar = styled.div<ProgressBarInterface>`
   height: 4px;
   border-radius: 4px;
   background: ${(props) =>
-    `linear-gradient(90deg, ${props.theme.color.loadColor1}, ${props.theme.color.loadColor1})`};
+    `linear-gradient(90deg, ${props.theme.color.primary}, ${props.theme.color.primary})`};
 `;
