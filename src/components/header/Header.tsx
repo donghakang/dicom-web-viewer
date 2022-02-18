@@ -17,6 +17,7 @@ import { changeMode } from "../../redux/reducers/toolSlice";
 import { useSideMenuDispatch } from "../../context/menubar/MenubarContext";
 import { useSeriesState } from "../../context/series/SeriesContext";
 import { theme } from "../../assets/styles/theme";
+import ButtonComponent from "./ButtonComponent";
 
 const Header: React.FC<{
   useRef: React.RefObject<HTMLInputElement>;
@@ -80,73 +81,42 @@ const Header: React.FC<{
   function loadedHeader() {
     return (
       <ul>
-        <li>
-          <button onClick={handleLoadClick}>
-            <IconContext.Provider
-              value={{
-                className: "button-component",
-              }}
-            >
-              <FaLungs size={24} />
-            </IconContext.Provider>
-          </button>
-        </li>
-        <li>
-          <button onClick={(e) => handleToolClick(e, "Scale")}>
-            <IconContext.Provider
-              value={{
-                className: "button-component",
-              }}
-            >
-              <FaSearch size={24} />
-            </IconContext.Provider>
-          </button>
-        </li>
-        <li>
-          <button onClick={(e) => handleToolClick(e, "Magnify")}>
-            <IconContext.Provider
-              value={{
-                className: "button-component",
-              }}
-            >
-              <FaSearch size={24} />
-            </IconContext.Provider>
-          </button>
-        </li>
-        <li>
-          <button onClick={(e) => handleToolClick(e, "Pan")}>
-            <IconContext.Provider
-              value={{
-                className: "button-component",
-              }}
-            >
-              <BsArrowsMove size={24} />
-            </IconContext.Provider>
-          </button>
-        </li>
-
-        <li>
-          <button onClick={(e) => handleToolClick(e, "Wwwc")}>
-            <IconContext.Provider
-              value={{
-                className: "button-component",
-              }}
-            >
-              <BsCircleHalf size={24} />
-            </IconContext.Provider>
-          </button>
-        </li>
-        <li>
-          <button onClick={(e) => handleToolClick(e, "Info")}>
-            <IconContext.Provider
-              value={{
-                className: "button-component",
-              }}
-            >
-              <BsInfoCircleFill size={24} />
-            </IconContext.Provider>
-          </button>
-        </li>
+        <ButtonComponent
+          onClick={handleLoadClick}
+          tooltip="Open Dicom folder"
+          className="button-component"
+          element={<FaLungs size={24} />}
+        />
+        <ButtonComponent
+          onClick={(e) => handleToolClick(e, "Scale")}
+          tooltip="Zoom"
+          className="button-component"
+          element={<FaSearch size={24} />}
+        />
+        <ButtonComponent
+          onClick={(e) => handleToolClick(e, "Magnify")}
+          tooltip="Magnify"
+          className="button-component"
+          element={<FaSearch size={24} />}
+        />
+        <ButtonComponent
+          onClick={(e) => handleToolClick(e, "Pan")}
+          tooltip="Pan"
+          className="button-component"
+          element={<BsArrowsMove size={24} />}
+        />
+        <ButtonComponent
+          onClick={(e) => handleToolClick(e, "Wwwc")}
+          tooltip="Threshold"
+          className="button-component"
+          element={<BsCircleHalf size={24} />}
+        />
+        <ButtonComponent
+          onClick={(e) => handleToolClick(e, "Info")}
+          tooltip="Information"
+          className="button-component"
+          element={<BsInfoCircleFill size={24} />}
+        />
       </ul>
     );
   }
@@ -154,17 +124,12 @@ const Header: React.FC<{
   function unloadedHeader() {
     return (
       <ul>
-        <li>
-          <button onClick={handleLoadClick}>
-            <IconContext.Provider
-              value={{
-                className: "button-component",
-              }}
-            >
-              <FaLungs size={24} />
-            </IconContext.Provider>
-          </button>
-        </li>
+        <ButtonComponent
+          onClick={handleLoadClick}
+          tooltip="Open Dicom folder"
+          className="button-component"
+          element={<FaLungs size={24} />}
+        />
       </ul>
     );
   }
@@ -184,14 +149,6 @@ const Header: React.FC<{
           </button>
         </div>
       )}
-      {/* <div className="menu-button-container">
-        <button onClick={handleToggleLeftSideMenu}>
-          <BsFillMenuButtonFill size={16} />
-        </button>
-        <button onClick={handleToggleRightSideMenu}>
-          <BiMenuAltRight size={16} />
-        </button>
-      </div> */}
     </Styled.Header>
   );
 };

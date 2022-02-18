@@ -18,8 +18,8 @@ const RightSideMenu: React.FC = () => {
   function getToolTypeView() {
     if (toolType.tool === "Wwwc") {
       return <WwwcMenu />;
-    } else if (toolType.tool === 'Info') {
-      return <InfoMenu /> 
+    } else if (toolType.tool === "Info") {
+      return <InfoMenu />;
     } else {
       return <ScaleMenu />;
     }

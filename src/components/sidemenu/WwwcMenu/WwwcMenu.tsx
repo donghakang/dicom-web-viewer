@@ -49,6 +49,7 @@ const Ww: React.FC = () => {
             value={tools.voi.windowWidth}
             size="small"
             onChange={onInputChange}
+            sx={{width: 60}}
             inputProps={{
               step: 1,
               min: 0,
@@ -89,6 +90,7 @@ const Wc: React.FC = () => {
             min={-4000}
             max={4000}
             step={1}
+            
             onChange={(e, v, a) => onSlideChange(e, v as number)}
             aria-label="Default"
             valueLabelDisplay="auto"
@@ -100,6 +102,7 @@ const Wc: React.FC = () => {
             value={tools.voi.windowCenter}
             size="small"
             onChange={onInputChange}
+            sx={{width: 60}}
             inputProps={{
               step: 1,
               min: -4000,
@@ -125,13 +128,17 @@ const WwwcMenu: React.FC = () => {
 
   return (
     <div className="content-container">
-      Window: <Ww />
-      Level: <Wc />
-      <div>
+      <span>Window: </span>
+      <Ww />
+      <span>Level: </span>
+      <Wc />
+      <div className="preset-container multiple-presets">
         <button onClick={(e) => applyPreset(1500, -500)}>Lung</button>
         <button onClick={(e) => applyPreset(750, -700)}>
           Emphysema Narrow
         </button>
+      </div>
+      <div className="preset-container">
         <button
           onClick={(e) =>
             applyPreset(

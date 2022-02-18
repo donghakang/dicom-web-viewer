@@ -4,16 +4,13 @@ export const Header = styled.nav`
   padding-top: 4px;
   height: var(--header-height);
   background-color: var(--dark-background);
-  /* border-bottom: 1px solid ${({ theme }) => theme.color.primary3};
-   */
-  
+
   display: flex;
   flex-direction: column;
 
-  div{
+  div {
     height: 40px;
     border-bottom: 1px solid #ffffffbb;
-    
   }
 
   .button-container {
@@ -33,7 +30,7 @@ export const Header = styled.nav`
           height: 100%;
 
           .button-component {
-            transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);;
+            transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
             color: ${({ theme }) => theme.color.primary2};
 
             * {
@@ -43,6 +40,34 @@ export const Header = styled.nav`
 
           .button-component:hover {
             color: ${({ theme }) => theme.color.primary};
+          }
+        }
+
+        .custom-tooltip {
+          border-bottom: 0px solid #ffffff;
+          padding: auto;
+          color: ${({ theme }) => theme.color.primary} !important;
+          background-color: ${({ theme }) => theme.color.dark} !important;
+          &.place-bottom {
+            &:after {
+              border-bottom-color: ${({ theme }) => theme.color.dark} !important;
+              border-bottom-style: solid !important;
+              border-bottom-width: 6px !important;
+            }
+          }
+          &.place-right {
+            &:after {
+              border-right-color: ${({ theme }) => theme.color.dark} !important;
+              border-right-style: solid !important;
+              border-right-width: 6px !important;
+            }
+          }
+          &.place-left {
+            &:after {
+              border-left-color: ${({ theme }) => theme.color.dark} !important;
+              border-left-style: solid !important;
+              border-left-width: 6px !important;
+            }
           }
         }
       }

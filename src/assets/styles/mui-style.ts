@@ -22,11 +22,13 @@ export const CustomSlider = styled(Slider)({
 
 export const Input = styled(MuiInput)({
   color: "white",
-  borderBottom: `1px solid ${theme.color.gray}`,
   "&:before": {
-    borderBottom: `1px solid ${theme.color.gray}`,
+    borderBottomColor: 'white'  
   },
   "&:after": {
-    borderBottom: `2px solid ${theme.color.primary2}`,
+      borderBottomColor: theme.color.primary
+  },
+  "&:hover:not(.Mui-focused):before": {
+    borderBottomColor: "white",
   },
 });

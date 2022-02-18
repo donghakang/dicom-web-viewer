@@ -14,15 +14,57 @@ export const RightSideMenu = styled(motion.div)`
 
   button {
     border-radius: 5px;
-    border: 1px solid #000;
+    border: 1px solid #fff;
+    color: white;
     bottom: 16px;
     right: 16px;
-    padding: 8px;
+    padding: 8px 12px;
     border-radius: 12px;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    &:hover { 
+      background-color: ${({ theme }) => theme.color.primary};
+      border: 1px solid ${({ theme }) => theme.color.primary};
+    }
   }
 
   .content-container {
     margin: 40px 20px;
+
+    span {
+      font-weight: 500;
+      color: ${({ theme }) => theme.color.gray};
+    }
+  }
+
+  .preset-container{
+    margin: 40px 0px;
+  }
+
+  .multiple-presets{
+    button {
+      margin: 0px 12px
+    }
+    button:nth-child(1) {
+      margin: 0;
+    }
+  }
+
+  //Info View
+  table {
+    tr {
+      line-height: 40px;
+      border-bottom: 1px solid ${({ theme }) => theme.color.primary3 + '99'};
+    }
+    th {
+      color: ${({ theme }) => theme.color.primary2};
+      text-align: left;
+    }
+
+    td {
+      color: #fff;
+
+    }
   }
 `;
 

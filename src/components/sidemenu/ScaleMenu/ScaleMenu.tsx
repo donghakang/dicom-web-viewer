@@ -31,6 +31,7 @@ const ScaleMenu: React.FC = () => {
 
   return (
     <div className="content-container">
+      <span>Scale: </span>
       <Box width="100%">
         <Grid container spacing={2} alignItems="center">
           <Grid item xs>
@@ -49,6 +50,7 @@ const ScaleMenu: React.FC = () => {
               value={tools.scale}
               size="small"
               onChange={onInputChange}
+              sx={{width: 60}}
               inputProps={{
                 step: 0.01,
                 min: 0,
@@ -60,7 +62,7 @@ const ScaleMenu: React.FC = () => {
           </Grid>
         </Grid>
       </Box>
-      <div>
+      <div className='preset-container'>
         <button onClick={onReset}>reset</button>
       </div>
     </div>
