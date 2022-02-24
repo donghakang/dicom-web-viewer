@@ -1,5 +1,5 @@
 import React from "react";
-import * as Styled from './style'
+import * as Styled from "./style";
 
 interface ImageScrollbarInterface {
   value: number;
@@ -9,17 +9,16 @@ interface ImageScrollbarInterface {
 }
 
 const ImageScrollbar: React.FC<ImageScrollbarInterface> = (props) => {
-
-  const {value, height, max, onInputCallback} = props
+  const { value, height, max, onInputCallback } = props;
 
   if (props.max === 0) {
     return null;
   }
 
-  function onChange (event: React.ChangeEvent<HTMLInputElement>) {
+  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     const intValue = parseInt(event.target.value, 10);
     onInputCallback(intValue);
-  };
+  }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     // We don't allow direct keyboard up/down input on the
@@ -32,7 +31,7 @@ const ImageScrollbar: React.FC<ImageScrollbarInterface> = (props) => {
     };
 
     // TODO: Enable scroll down / scroll up without depending on ohif-core
-    console.log('key pressed', event)
+    // console.log('key pressed', event)
     if (event.which === keys.DOWN) {
       //OHIF.commands.run('scrollDown');
       event.preventDefault();
@@ -40,15 +39,14 @@ const ImageScrollbar: React.FC<ImageScrollbarInterface> = (props) => {
       //OHIF.commands.run('scrollUp');
       event.preventDefault();
     }
-  };
-
+  }
 
   return (
     <Styled.ImageScrollbar>
       <div className="scroll-holder">
         <input
           className="imageSlider"
-          style={{width: `${height}`}}
+          style={{ width: `${height}` }}
           type="range"
           min="0"
           max={max}
@@ -61,6 +59,5 @@ const ImageScrollbar: React.FC<ImageScrollbarInterface> = (props) => {
     </Styled.ImageScrollbar>
   );
 };
-
 
 export default ImageScrollbar;

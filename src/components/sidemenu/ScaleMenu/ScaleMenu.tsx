@@ -14,7 +14,7 @@ const ScaleMenu: React.FC = () => {
     event: Event | React.MouseEvent<HTMLButtonElement, MouseEvent>,
     value: number
   ) {
-    console.log("change", value);
+    // console.log("change", value);
     dispatch(changeScale(value));
   }
 

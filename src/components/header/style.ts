@@ -8,11 +8,6 @@ export const Header = styled.nav`
   display: flex;
   flex-direction: column;
 
-  div {
-    height: 40px;
-    border-bottom: 1px solid #ffffffbb;
-  }
-
   .button-container {
     border-bottom: 1px solid #ffffff55;
     padding-left: 20px;
@@ -42,34 +37,6 @@ export const Header = styled.nav`
             color: ${({ theme }) => theme.color.primary};
           }
         }
-
-        .custom-tooltip {
-          border-bottom: 0px solid #ffffff;
-          padding: auto;
-          color: ${({ theme }) => theme.color.primary} !important;
-          background-color: ${({ theme }) => theme.color.dark} !important;
-          &.place-bottom {
-            &:after {
-              border-bottom-color: ${({ theme }) => theme.color.dark} !important;
-              border-bottom-style: solid !important;
-              border-bottom-width: 6px !important;
-            }
-          }
-          &.place-right {
-            &:after {
-              border-right-color: ${({ theme }) => theme.color.dark} !important;
-              border-right-style: solid !important;
-              border-right-width: 6px !important;
-            }
-          }
-          &.place-left {
-            &:after {
-              border-left-color: ${({ theme }) => theme.color.dark} !important;
-              border-left-style: solid !important;
-              border-left-width: 6px !important;
-            }
-          }
-        }
       }
 
       // 2nd ul
@@ -79,9 +46,39 @@ export const Header = styled.nav`
     }
   }
 
+  .custom-tooltip {
+    border-bottom: 0px solid #ffffff;
+    padding: auto;
+    color: ${({ theme }) => theme.color.primary} !important;
+    background-color: ${({ theme }) => theme.color.dark} !important;
+    &.place-bottom {
+      &:after {
+        border-bottom-color: ${({ theme }) => theme.color.dark} !important;
+        border-bottom-style: solid !important;
+        border-bottom-width: 6px !important;
+      }
+    }
+    &.place-right {
+      &:after {
+        border-right-color: ${({ theme }) => theme.color.dark} !important;
+        border-right-style: solid !important;
+        border-right-width: 6px !important;
+      }
+    }
+    &.place-left {
+      &:after {
+        border-left-color: ${({ theme }) => theme.color.dark} !important;
+        border-left-style: solid !important;
+        border-left-width: 6px !important;
+      }
+    }
+  }
+
   .menu-button-container {
     display: flex;
     justify-content: space-between;
+    height: 40px;
+    border-bottom: 1px solid #ffffffbb;
 
     button {
       width: 80px;

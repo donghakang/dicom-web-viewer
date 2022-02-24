@@ -18,11 +18,14 @@ import {
 } from "../../redux/reducers/toolSlice";
 import { useSideMenuState } from "../../context/menubar/MenubarContext";
 import { useSeriesState } from "../../context/series/SeriesContext";
+import { convertToFalseColorImage } from "cornerstone-core";
+import { changeViewport } from "../../redux/reducers/viewportSlice";
 
 const variants = {
   opened: {
     x: "var(--left-side-menu-width)",
-    width: "calc(100% - var(--right-side-menu-width) - var(--left-side-menu-width))",
+    width:
+      "calc(100% - var(--right-side-menu-width) - var(--left-side-menu-width))",
     transition: { ease: "easeInOut" },
   },
   rightOpened: {
@@ -72,14 +75,22 @@ const DicomViewer: React.FC = () => {
 
   const images = useAppSelector((state) => state.imageLoader.images);
   const { tool, viewportData } = useAppSelector((state) => state.toolType);
+  const { viewport, row, col } = useAppSelector((state) => state.viewport);
   const { currentSeries, series } = useSeriesState();
   const dispatch = useAppDispatch();
 
   const [element, setElement] = useState(null);
 
+  useEffect(() => {
+    console.log(row, col, "콜록");
+  }, [col, row]);
 
   function loadingCornerstoneViewport() {
-    return images.length > 0 && series.length > 0
+    return images.length > 0 && series.length > 0;
+  }
+
+  function handleSelectActiveViewport(v: number) {
+    dispatch(changeViewport(v));
   }
 
   return (
@@ -97,54 +108,72 @@ const DicomViewer: React.FC = () => {
               ? "leftOpened"
               : "closed"
           }
+          style={{
+            gridTemplateColumns: `repeat(${col}, ${100 / col}%)`,
+            gridTemplateRows: `repeat(${row}, ${100 / row}%)`,
+          }}
         >
-          <CornerstoneViewport
-            key={0}
-            tools={tools}
-            style={{ width: "100%", height: "100%" }}
-            imageIds={images
-              .filter((image) => image.series.seriesNumber === currentSeries)
-              .map((image) => {
-                return image.imageId;
-              })}
-            className={"active"}
-            activeTool={tool}
-            loadingIndicatorComponent={DicomViewerLoader}
-            viewportOverlayComponent={ViewportOverlay}
-            scrollbarComponent={ImageScrollbar}
-            onElementEnabled={(elementEnabledEvt: any) => {
-              const cornerstoneElement = elementEnabledEvt.detail.element;
+          {Array.apply(null, Array(row * col))
+            .map(function (x, i) {
+              return i;
+            })
+            .map((i) => (
+              <CornerstoneViewport
+                key={i}
+                setViewportActive={() => {
+                  handleSelectActiveViewport(i);
+                }}
+                tools={tools}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+                imageIds={images
+                  .filter(
+                    (image) => image.series.seriesNumber === currentSeries
+                  )
+                  .map((image) => {
+                    return image.imageId;
+                  })}
+                className={viewport === i ? "active" : ""}
+                activeTool={tool}
+                loadingIndicatorComponent={DicomViewerLoader}
+                viewportOverlayComponent={ViewportOverlay}
+                scrollbarComponent={ImageScrollbar}
+                onElementEnabled={(elementEnabledEvt: any) => {
+                  const cornerstoneElement = elementEnabledEvt.detail.element;
 
-              setElement(cornerstoneElement);
+                  setElement(cornerstoneElement);
 
-              cornerstoneElement.addEventListener(
-                "cornerstonenewimage",
-                (NewImageEvent: any) => {
-                  const viewport = NewImageEvent.detail.image;
-                  // set default window center, window width
-                  dispatch(
-                    setDefaultData({
-                      windowCenter: viewport.windowCenter,
-                      windowWidth: viewport.windowWidth,
-                    })
+                  cornerstoneElement.addEventListener(
+                    "cornerstonenewimage",
+                    (NewImageEvent: any) => {
+                      const viewport = NewImageEvent.detail.image;
+                      // set default window center, window width
+                      dispatch(
+                        setDefaultData({
+                          windowCenter: viewport.windowCenter,
+                          windowWidth: viewport.windowWidth,
+                        })
+                      );
+                    }
                   );
-                }
-              );
 
-              cornerstoneElement.addEventListener(
-                "cornerstoneimagerendered",
-                (imageRenderedEvent: any) => {
-                  const viewport = imageRenderedEvent.detail.viewport;
-                  dispatch(changeScale(viewport.scale));
-                  dispatch(changeWc(viewport.voi.windowCenter));
-                  dispatch(changeWw(viewport.voi.windowWidth));
-                }
-              );
-            }}
-            wc={viewportData.voi.windowCenter}
-            ww={viewportData.voi.windowWidth}
-            scale={viewportData.scale}
-          />
+                  cornerstoneElement.addEventListener(
+                    "cornerstoneimagerendered",
+                    (imageRenderedEvent: any) => {
+                      const viewport = imageRenderedEvent.detail.viewport;
+                      dispatch(changeScale(viewport.scale));
+                      dispatch(changeWc(viewport.voi.windowCenter));
+                      dispatch(changeWw(viewport.voi.windowWidth));
+                    }
+                  );
+                }}
+                wc={viewportData.voi.windowCenter}
+                ww={viewportData.voi.windowWidth}
+                scale={viewportData.scale}
+              />
+            ))}
         </Styled.DicomViewer>
       ) : (
         <>

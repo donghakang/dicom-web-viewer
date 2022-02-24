@@ -84,7 +84,7 @@ const InfoMenu = () => {
     )
     .filter((image) => image.series.seriesNumber === currentSeries)[0];
 
-  console.log(allSeriesInfo);
+  // console.log(allSeriesInfo);
   return (
     <div className="content-container">
       {allSeriesInfo && (

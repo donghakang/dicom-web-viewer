@@ -5522,6 +5522,11 @@ ws@^8.1.0:
   resolved "https://registry.npmjs.org/ws/-/ws-8.4.2.tgz"
   integrity sha512-Kbk4Nxyq7/ZWqr/tarI9yIt/+iNNFOjBXEWgTb4ydaNHBNGgvf2QHbS9fdfsndfjFlFwEd4Al+mw83YkaD10ZA==
 
+xtk@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/xtk/-/xtk-10.0.0.tgz#0a2507bdd0087d0de3d961c3a95b0c761e9a3af0"
+  integrity sha512-vwwrXlBNq+2cTFtXgKQw2ADxfKHRDEDBWCXMyt8JGp7F04w2YhN7QQvYNNPUnd/JY+BhPFf6ounKOqM6VwR2BQ==
+
 yallist@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/yallist/-/yallist-4.0.0.tgz"

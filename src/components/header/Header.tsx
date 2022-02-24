@@ -18,6 +18,7 @@ import { useSideMenuDispatch } from "../../context/menubar/MenubarContext";
 import { useSeriesState } from "../../context/series/SeriesContext";
 import { theme } from "../../assets/styles/theme";
 import ButtonComponent from "./ButtonComponent";
+import GridComponent from "../gridview/GridComponent";
 
 const Header: React.FC<{
   useRef: React.RefObject<HTMLInputElement>;
@@ -110,6 +111,13 @@ const Header: React.FC<{
           tooltip="Threshold"
           className="button-component"
           element={<BsCircleHalf size={24} />}
+        />
+        <ButtonComponent
+          clickTrigger
+          onClick={(e) => console.log("e!!")}
+          tooltip={<GridComponent/>}
+          className="button-component"
+          element={<BsInfoCircleFill size={24} />}
         />
         <ButtonComponent
           onClick={(e) => handleToolClick(e, "Info")}

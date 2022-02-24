@@ -7,8 +7,11 @@ export const Viewer = styled.div`
 `;
 
 export const DicomViewer = styled(motion.div)`
+  display: grid;
 
-
+  .active {
+    border: 3px solid green;
+  }
 `;
 
 export const DicomViewerLoader = styled.div`

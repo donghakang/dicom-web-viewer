@@ -74,6 +74,7 @@ export const LeftSideMenu = styled(motion.div)`
   top: var(--header-height);
   left: 0;
 
+  overflow-y: scroll;
   width: var(--left-side-menu-width);
   height: calc(100% - var(--header-height));
   
