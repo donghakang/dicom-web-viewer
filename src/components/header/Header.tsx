@@ -8,17 +8,23 @@ import {
   BsInfoCircleFill,
   BsArrowsMove,
   BsFillMenuButtonFill,
+  BsLockFill,
+  BsUnlockFill,
+  BsGrid3X2GapFill,
 } from "react-icons/bs";
 import { BiMenuAltRight } from "react-icons/bi";
 import { IconContext } from "react-icons";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { changeMode } from "../../redux/reducers/toolSlice";
 import { useSideMenuDispatch } from "../../context/menubar/MenubarContext";
 import { useSeriesState } from "../../context/series/SeriesContext";
 import { theme } from "../../assets/styles/theme";
 import ButtonComponent from "./ButtonComponent";
 import GridComponent from "../gridview/GridComponent";
+import {
+  changeDeidentification,
+  changeMode,
+} from "../../redux/reducers/viewportSlice";
 
 const Header: React.FC<{
   useRef: React.RefObject<HTMLInputElement>;
@@ -26,12 +32,14 @@ const Header: React.FC<{
 }> = ({ useRef, setTool }) => {
   const dispatch = useAppDispatch();
   const sideMenuDispatch = useSideMenuDispatch();
+  const { viewport, deidentification } = useAppSelector(
+    (state) => state.viewport
+  );
   const images = useAppSelector((state) => state.imageLoader.images);
   const { currentSeries, series } = useSeriesState();
 
   function handleLoadClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     if (useRef.current !== null) {
-      console.log(useRef);
       useRef.current.click();
     }
   }
@@ -64,6 +72,9 @@ const Header: React.FC<{
     if (type === "Info") {
       sideMenuDispatch({ type: "RIGHT_OPEN" });
       dispatch(changeMode("Info"));
+    }
+    if (type === "Private") {
+      dispatch(changeDeidentification());
     }
   }
 
@@ -114,16 +125,28 @@ const Header: React.FC<{
         />
         <ButtonComponent
           clickTrigger
-          onClick={(e) => console.log("e!!")}
-          tooltip={<GridComponent/>}
+          onClick={(e) => {}}
+          tooltip={<GridComponent />}
           className="button-component"
-          element={<BsInfoCircleFill size={24} />}
+          element={<BsGrid3X2GapFill size={24} />}
         />
         <ButtonComponent
           onClick={(e) => handleToolClick(e, "Info")}
           tooltip="Information"
           className="button-component"
           element={<BsInfoCircleFill size={24} />}
+        />
+        <ButtonComponent
+          onClick={(e) => handleToolClick(e, "Private")}
+          tooltip="Deidentification"
+          className="button-component"
+          element={
+            deidentification ? (
+              <BsLockFill size={24} />
+            ) : (
+              <BsUnlockFill size={24} />
+            )
+          }
         />
       </ul>
     );

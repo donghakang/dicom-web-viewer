@@ -10,16 +10,16 @@ import cornerstone from "cornerstone-core";
 import * as Styled from "./style";
 import ViewportOverlay from "./ViewportOverlay";
 import ImageScrollbar from "./ImageScrollbar";
-import {
-  changeScale,
-  changeWc,
-  changeWw,
-  setDefaultData,
-} from "../../redux/reducers/toolSlice";
 import { useSideMenuState } from "../../context/menubar/MenubarContext";
 import { useSeriesState } from "../../context/series/SeriesContext";
 import { convertToFalseColorImage } from "cornerstone-core";
-import { changeViewport } from "../../redux/reducers/viewportSlice";
+import {
+  changeScale,
+  changeViewport,
+  changeWc,
+  changeWw,
+  setDefaultData,
+} from "../../redux/reducers/viewportSlice";
 
 const variants = {
   opened: {
@@ -74,16 +74,12 @@ const DicomViewer: React.FC = () => {
   ]);
 
   const images = useAppSelector((state) => state.imageLoader.images);
-  const { tool, viewportData } = useAppSelector((state) => state.toolType);
-  const { viewport, row, col } = useAppSelector((state) => state.viewport);
+  const { viewport, row, col, tool, viewportData, allViewport } =
+    useAppSelector((state) => state.viewport);
   const { currentSeries, series } = useSeriesState();
   const dispatch = useAppDispatch();
 
   const [element, setElement] = useState(null);
-
-  useEffect(() => {
-    console.log(row, col, "콜록");
-  }, [col, row]);
 
   function loadingCornerstoneViewport() {
     return images.length > 0 && series.length > 0;
@@ -114,9 +110,7 @@ const DicomViewer: React.FC = () => {
           }}
         >
           {Array.apply(null, Array(row * col))
-            .map(function (x, i) {
-              return i;
-            })
+            .map((x, i) => i)
             .map((i) => (
               <CornerstoneViewport
                 key={i}
@@ -135,7 +129,9 @@ const DicomViewer: React.FC = () => {
                   .map((image) => {
                     return image.imageId;
                   })}
-                className={viewport === i ? "active" : ""}
+                className={
+                  allViewport || viewport === i ? "active viewport" : "viewport"
+                }
                 activeTool={tool}
                 loadingIndicatorComponent={DicomViewerLoader}
                 viewportOverlayComponent={ViewportOverlay}
@@ -162,16 +158,32 @@ const DicomViewer: React.FC = () => {
                   cornerstoneElement.addEventListener(
                     "cornerstoneimagerendered",
                     (imageRenderedEvent: any) => {
-                      const viewport = imageRenderedEvent.detail.viewport;
-                      dispatch(changeScale(viewport.scale));
-                      dispatch(changeWc(viewport.voi.windowCenter));
-                      dispatch(changeWw(viewport.voi.windowWidth));
+                      const v = imageRenderedEvent.detail.viewport;
+                      dispatch(changeScale({ viewport: i, scale: v.scale }));
+                      dispatch(
+                        changeWc({ viewport: i, wc: v.voi.windowCenter })
+                      );
+                      dispatch(
+                        changeWw({ viewport: i, ww: v.voi.windowWidth })
+                      );
                     }
                   );
                 }}
-                wc={viewportData.voi.windowCenter}
-                ww={viewportData.voi.windowWidth}
-                scale={viewportData.scale}
+                wc={
+                  allViewport
+                    ? viewportData[viewport].voi.windowCenter
+                    : viewportData[i].voi.windowCenter
+                }
+                ww={
+                  allViewport
+                    ? viewportData[viewport].voi.windowWidth
+                    : viewportData[i].voi.windowWidth
+                }
+                scale={
+                  allViewport
+                    ? viewportData[viewport].scale
+                    : viewportData[i].scale
+                }
               />
             ))}
         </Styled.DicomViewer>

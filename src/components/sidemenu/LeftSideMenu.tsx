@@ -17,7 +17,6 @@ const variants = {
 const LeftSideMenu: React.FC = () => {
   const { leftSideMenuOpened } = useSideMenuState();
   const { currentSeries, series } = useSeriesState();
-  const toolType = useAppSelector((state) => state.toolType);
   const images = useAppSelector((state) => state.imageLoader.images);
 
   return (

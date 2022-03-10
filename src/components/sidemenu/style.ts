@@ -8,9 +8,8 @@ export const RightSideMenu = styled(motion.div)`
 
   width: var(--right-side-menu-width);
   height: calc(100% - var(--header-height));
-  
-  background-color: var(--dark-background);
 
+  background-color: var(--dark-background);
 
   button {
     border-radius: 5px;
@@ -22,14 +21,15 @@ export const RightSideMenu = styled(motion.div)`
     border-radius: 12px;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 
-    &:hover { 
+    &:hover {
       background-color: ${({ theme }) => theme.color.primary};
       border: 1px solid ${({ theme }) => theme.color.primary};
     }
   }
 
   .content-container {
-    margin: 40px 20px;
+    padding: 2rem 1rem;
+    height: 100%;
 
     span {
       font-weight: 500;
@@ -37,13 +37,13 @@ export const RightSideMenu = styled(motion.div)`
     }
   }
 
-  .preset-container{
+  .preset-container {
     margin: 40px 0px;
   }
 
-  .multiple-presets{
+  .multiple-presets {
     button {
-      margin: 0px 12px
+      margin: 0px 12px;
     }
     button:nth-child(1) {
       margin: 0;
@@ -54,7 +54,7 @@ export const RightSideMenu = styled(motion.div)`
   table {
     tr {
       line-height: 40px;
-      border-bottom: 1px solid ${({ theme }) => theme.color.primary3 + '99'};
+      border-bottom: 1px solid ${({ theme }) => theme.color.primary3 + "99"};
     }
     th {
       color: ${({ theme }) => theme.color.primary2};
@@ -63,11 +63,9 @@ export const RightSideMenu = styled(motion.div)`
 
     td {
       color: #fff;
-
     }
   }
 `;
-
 
 export const LeftSideMenu = styled(motion.div)`
   position: fixed;
@@ -77,13 +75,13 @@ export const LeftSideMenu = styled(motion.div)`
   overflow-y: scroll;
   width: var(--left-side-menu-width);
   height: calc(100% - var(--header-height));
-  
+
   background-color: var(--dark-background);
-`
+`;
 
 export const SeriesComponent = styled.div`
   width: 250px;
-  height: 230px; 
+  height: 230px;
   margin: 24px auto;
 
   .viewport-container {
@@ -116,4 +114,4 @@ export const SeriesComponent = styled.div`
       fill: ${({ theme }) => theme.color.primary};
     }
   }
-`
+`;

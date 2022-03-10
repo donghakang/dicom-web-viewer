@@ -98,8 +98,6 @@ const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
 
       items.push(dicomInfo);
       setProgress((prev) => prev + step);
-
-      console.log("🚜", dicomInfo);
     }
 
     items.sort((l, r) => {
@@ -119,7 +117,8 @@ const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
       )
       .sort((a, b) => a.series.seriesNumber - b.series.seriesNumber);
 
-    const currentSeries = allSeriesInfo[0].series.seriesNumber;
+    const currentSeries =
+      allSeriesInfo.length > 0 ? allSeriesInfo[0].series.seriesNumber : 0;
     const seriesInfo = allSeriesInfo.map((series) => {
       return {
         seriesNumber: series.series.seriesNumber,

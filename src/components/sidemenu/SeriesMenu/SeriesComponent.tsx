@@ -24,8 +24,6 @@ const SeriesComponent: React.FC<{
       (image) => image.series.seriesNumber === seriesInfo.seriesNumber
     );
 
-    console.log('🧘🏿‍♂️', filteredImage, filteredImage.length / 2)
-
     return filteredImage[Math.floor(filteredImage.length / 2)].imageId;
   }
 

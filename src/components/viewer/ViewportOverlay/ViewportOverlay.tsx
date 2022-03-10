@@ -5,6 +5,7 @@ import cornerstone from "cornerstone-core";
 import dicomParser from "dicom-parser";
 import { helpers } from "../../helper/overlay";
 import * as Styled from "./style";
+import { useAppSelector } from "../../../redux/hooks";
 
 const { formatPN, formatDA, formatNumberPrecision, formatTM, isValidNumber } =
   helpers;
@@ -43,6 +44,9 @@ const ViewportOverlay: React.FC<ViewportOverlayInterface> = (props) => {
   const { imageId, scale, windowWidth, windowCenter, imageIndex, stackSize } =
     props;
 
+  const deidentification = useAppSelector(
+    (state) => state.viewport.deidentification
+  );
   if (!imageId) {
     return null;
   }
@@ -58,7 +62,7 @@ const ViewportOverlay: React.FC<ViewportOverlayInterface> = (props) => {
   const generalStudyModule =
     cornerstone.metaData.get("generalStudyModule", imageId) || {};
   const { studyDate, studyTime, studyDescription } = generalStudyModule;
-
+  
   const patientModule =
     cornerstone.metaData.get("patientModule", imageId) || {};
   const { patientId, patientName } = patientModule;
@@ -79,13 +83,18 @@ const ViewportOverlay: React.FC<ViewportOverlayInterface> = (props) => {
   const normal = (
     <React.Fragment>
       <div className="top-left overlay-element">
-        <div>{formatPN(patientName)}</div>
-        <div>{patientId}</div>
+        {!deidentification && (
+          <>
+            <div>{formatPN(patientName)}</div>
+            <div>{patientId}</div>
+          </>
+        )}
       </div>
       <div className="top-right overlay-element">
         <div>{studyDescription}</div>
         <div>
-          {formatDA(studyDate)} {formatTM(studyTime)}
+          <>{!deidentification && formatDA(studyDate, 'MMM d, ')}</>
+          {formatDA(studyDate, 'yyyy')} <>{!deidentification && formatTM(studyTime)}</>
         </div>
       </div>
       <div className="bottom-right overlay-element">

@@ -8,9 +8,12 @@ export const Viewer = styled.div`
 
 export const DicomViewer = styled(motion.div)`
   display: grid;
-
+  
+  .viewport { 
+    border: 3px solid black;
+  }
   .active {
-    border: 3px solid green;
+    border: 3px solid ${({ theme }) => theme.color.primary3};;
   }
 `;
 

@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import imageReducer from "./reducers/imageSlice";
-import toolReducer from "./reducers/toolSlice";
 import viewportReducer from './reducers/viewportSlice'
 import { composeWithDevTools } from 'redux-devtools-extension'; // 리덕스 개발자 도구
 import logger from 'redux-logger';
@@ -8,7 +7,6 @@ import logger from 'redux-logger';
 const store = configureStore({
   reducer: {
     imageLoader: imageReducer,
-    toolType: toolReducer,
     viewport: viewportReducer,
   },
   // middleware:  (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),

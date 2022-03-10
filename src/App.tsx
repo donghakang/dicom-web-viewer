@@ -1,11 +1,11 @@
 import * as React from "react";
-import { useState, useEffect, useRef } from "react";
-import logo from "./logo.svg";
+import { useState, useRef } from "react";
 import "./App.css";
 import Viewer from "./components/viewer/Viewer";
 import ProgressBar from "./components/loader";
 import FileLoader from "./components/fileloader";
 import { SeriesProvider } from "./context/series/SeriesContext";
+import { MenubarProvider } from "./context/menubar/MenubarContext";
 
 const App: React.FC = () => {
   // File Loader
@@ -15,7 +15,9 @@ const App: React.FC = () => {
   return (
     <SeriesProvider>
       <ProgressBar files={files} />
-      <Viewer fileRef={fileRef} />
+      <MenubarProvider>
+        <Viewer fileRef={fileRef} />
+      </MenubarProvider>
       <FileLoader fileRef={fileRef} files={files} setFiles={setFiles} />
     </SeriesProvider>
   );

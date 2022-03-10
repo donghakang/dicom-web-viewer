@@ -13,12 +13,12 @@ const variants = {
 
 const RightSideMenu: React.FC = () => {
   const { rightSideMenuOpened } = useSideMenuState();
-  const toolType = useAppSelector((state) => state.toolType);
+  const { tool } = useAppSelector((state) => state.viewport);
 
   function getToolTypeView() {
-    if (toolType.tool === "Wwwc") {
+    if (tool === "Wwwc") {
       return <WwwcMenu />;
-    } else if (toolType.tool === "Info") {
+    } else if (tool === "Info") {
       return <InfoMenu />;
     } else {
       return <ScaleMenu />;

@@ -1,4 +1,6 @@
 import React from "react";
+import { BsLockFill } from "react-icons/bs";
+import { theme } from "../../../assets/styles/theme";
 import { useSeriesState } from "../../../context/series/SeriesContext";
 import { useAppSelector } from "../../../redux/hooks";
 
@@ -72,6 +74,7 @@ const InfoSection: React.FC<InfoState> = (props) => {
 
 const InfoMenu = () => {
   const images = useAppSelector((state) => state.imageLoader.images);
+  const { deidentification } = useAppSelector((state) => state.viewport);
   const { currentSeries } = useSeriesState();
 
   const allSeriesInfo: any = images
@@ -84,21 +87,40 @@ const InfoMenu = () => {
     )
     .filter((image) => image.series.seriesNumber === currentSeries)[0];
 
-  // console.log(allSeriesInfo);
   return (
     <div className="content-container">
-      {allSeriesInfo && (
-        <InfoSection
-          patientName={allSeriesInfo.patient.patientName}
-          seriesNumber={allSeriesInfo.series.seriesNumber}
-          seriesDate={allSeriesInfo.series.seriesDate}
-          seriesTime={allSeriesInfo.series.seriesTime}
-          seriesDescription={allSeriesInfo.series.seriesDescription}
-          studyID={allSeriesInfo.study.studyID}
-          studyDescription={allSeriesInfo.study.studyDescription}
-          studyDateTime={allSeriesInfo.study.studyDateTime}
-        />
-      )}
+      <>
+        {!deidentification ? (
+          <>
+            {allSeriesInfo && (
+              <InfoSection
+                patientName={allSeriesInfo.patient.patientName}
+                seriesNumber={allSeriesInfo.series.seriesNumber}
+                seriesDate={allSeriesInfo.series.seriesDate}
+                seriesTime={allSeriesInfo.series.seriesTime}
+                seriesDescription={allSeriesInfo.series.seriesDescription}
+                studyID={allSeriesInfo.study.studyID}
+                studyDescription={allSeriesInfo.study.studyDescription}
+                studyDateTime={allSeriesInfo.study.studyDateTime}
+              />
+            )}
+          </>
+        ) : (
+          <div
+            style={{
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              color: theme.color.primary
+            }}
+          >
+            <BsLockFill size={40} />
+            <span style={{ marginTop: "1rem" }}>DEIDENTIFIED</span>
+          </div>
+        )}
+      </>
     </div>
   );
 };
