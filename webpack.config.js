@@ -1,8 +1,11 @@
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
-const WorkboxPlugin = require('workbox-webpack-plugin');
+const WorkboxPlugin = require("workbox-webpack-plugin");
+const dotenv = require('dotenv');
+dotenv.config();
 
 module.exports = {
   entry: path.resolve(__dirname, "src/index.tsx"),
@@ -77,7 +80,7 @@ module.exports = {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
         type: "asset/resource",
         generator: {
-          filename: './[name][ext]',
+          filename: "./[name][ext]",
         },
       },
       {
@@ -94,12 +97,35 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env.REACT_APP_APIKEY": JSON.stringify(
+        process.env.REACT_APP_APIKEY
+      ),
+      "process.env.REACT_APP_AUTH_DOMAIN": JSON.stringify(
+        process.env.REACT_APP_AUTH_DOMAIN
+      ),
+      "process.env.REACT_APP_PROJECT_ID": JSON.stringify(
+        process.env.REACT_APP_PROJECT_ID
+      ),
+      "process.env.REACT_APP_STORAGE_BUCKET": JSON.stringify(
+        process.env.REACT_APP_STORAGE_BUCKET
+      ),
+      "process.env.REACT_APP_MESSAGE_SENDER_ID": JSON.stringify(
+        process.env.REACT_APP_MESSAGE_SENDER_ID
+      ),
+      "process.env.REACT_APP_APP_ID": JSON.stringify(
+        process.env.REACT_APP_APP_ID
+      ),
+      "process.env.REACT_APP_MEASUREMENT_ID": JSON.stringify(
+        process.env.REACT_APP_MEASUREMENT_ID
+      ),
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "public/index.html"),
     }),
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,
-      skipWaiting: true
+      skipWaiting: true,
     }),
     new WebpackManifestPlugin({
       fileName: "manifest.json",

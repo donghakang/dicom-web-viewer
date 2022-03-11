@@ -124,19 +124,6 @@ const Header: React.FC<{
           element={<BsCircleHalf size={24} />}
         />
         <ButtonComponent
-          clickTrigger
-          onClick={(e) => {}}
-          tooltip={<GridComponent />}
-          className="button-component"
-          element={<BsGrid3X2GapFill size={24} />}
-        />
-        <ButtonComponent
-          onClick={(e) => handleToolClick(e, "Info")}
-          tooltip="Information"
-          className="button-component"
-          element={<BsInfoCircleFill size={24} />}
-        />
-        <ButtonComponent
           onClick={(e) => handleToolClick(e, "Private")}
           tooltip="Deidentification"
           className="button-component"
@@ -148,6 +135,24 @@ const Header: React.FC<{
             )
           }
         />
+        <ButtonComponent
+          clickTrigger
+          onClick={(e) => {}}
+          tooltip={<GridComponent />}
+          className="button-component"
+          element={<BsGrid3X2GapFill size={24} />}
+        />
+        <li style={{flex: 1}}>
+
+        </li>
+        
+        <ButtonComponent
+          onClick={(e) => handleToolClick(e, "Info")}
+          tooltip="Information"
+          className="button-component"
+          element={<BsInfoCircleFill size={24} />}
+        />
+        
       </ul>
     );
   }

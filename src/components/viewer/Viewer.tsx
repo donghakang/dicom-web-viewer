@@ -23,7 +23,6 @@ const Viewer: React.FC<{ fileRef: React.RefObject<HTMLInputElement> }> = ({
 
   // hot key setup
   const handleKeyPress = useCallback((event) => {
-    console.log(`Key pressed: ${event.key}`);
     switch (event.key) {
       case "Shift":
         dispatch(allViewportOn());
@@ -62,7 +61,6 @@ const Viewer: React.FC<{ fileRef: React.RefObject<HTMLInputElement> }> = ({
   }, []);
 
   const handleKeyRelease = useCallback((event) => {
-    console.log(`Key released: ${event.key}`);
     switch (event.key) {
       case "Shift":
         dispatch(allViewportOff());
