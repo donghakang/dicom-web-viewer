@@ -38,6 +38,7 @@
     "cornerstone-web-image-loader": "^2.1.1",
     "dicom-parser": "^1.8.11",
     "dotenv": "^16.0.0",
+    "firebase": "^9.6.8",
     "framer-motion": "^6.2.3",
     "hammerjs": "^2.0.8",
     "patch-package": "^6.4.7",
