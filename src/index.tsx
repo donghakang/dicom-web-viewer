@@ -40,7 +40,7 @@ const firebaseConfig = {
   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
   appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
@@ -51,11 +51,11 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("/service-worker.js")
-      .then((registration) => {
-        // console.log("SW registered: ", registration);
+      .then((registration: any) => {
+        console.log("SW registered: ", registration);
       })
-      .catch((registrationError) => {
-        // console.log("SW registration failed: ", registrationError);
+      .catch((registrationError: any) => {
+        console.log("SW registration failed: ", registrationError);
       });
   });
 }

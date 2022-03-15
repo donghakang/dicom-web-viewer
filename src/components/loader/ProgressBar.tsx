@@ -98,13 +98,11 @@ const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
 
       items.push(dicomInfo);
       setProgress((prev) => prev + step);
+      console.log('LoadWADO', step)
     }
-
     items.sort((l, r) => {
       return l.instanceNumber - r.instanceNumber;
     });
-
-    dispatch(setImages(items));
 
     // series sort
     const allSeriesInfo = items
@@ -134,6 +132,8 @@ const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
       currentSeries: currentSeries,
     });
     seriesDispatch({ type: "SET_SERIES", series: seriesInfo });
+
+    dispatch(setImages(items));
 
     setProgress(0);
   }

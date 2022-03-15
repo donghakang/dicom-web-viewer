@@ -25,6 +25,7 @@ import {
   changeDeidentification,
   changeMode,
 } from "../../redux/reducers/viewportSlice";
+import CustomTooltip from "../tooltip";
 
 const Header: React.FC<{
   useRef: React.RefObject<HTMLInputElement>;
@@ -93,37 +94,44 @@ const Header: React.FC<{
   function loadedHeader() {
     return (
       <ul>
-        <ButtonComponent
+        <CustomTooltip
+          id="dicom"
           onClick={handleLoadClick}
-          tooltip="Open Dicom folder"
+          tooltip="Open DICOM folder"
           className="button-component"
           element={<FaLungs size={24} />}
         />
+        <li style={{ flex: 1 }}></li>
         <ButtonComponent
+          id="zoom"
           onClick={(e) => handleToolClick(e, "Scale")}
           tooltip="Zoom"
           className="button-component"
           element={<FaSearch size={24} />}
         />
         <ButtonComponent
+          id="magnify"
           onClick={(e) => handleToolClick(e, "Magnify")}
           tooltip="Magnify"
           className="button-component"
           element={<FaSearch size={24} />}
         />
         <ButtonComponent
+          id="pan"
           onClick={(e) => handleToolClick(e, "Pan")}
           tooltip="Pan"
           className="button-component"
           element={<BsArrowsMove size={24} />}
         />
         <ButtonComponent
+          id="wwwc"
           onClick={(e) => handleToolClick(e, "Wwwc")}
           tooltip="Threshold"
           className="button-component"
           element={<BsCircleHalf size={24} />}
         />
         <ButtonComponent
+          id="deidentification"
           onClick={(e) => handleToolClick(e, "Private")}
           tooltip="Deidentification"
           className="button-component"
@@ -136,23 +144,22 @@ const Header: React.FC<{
           }
         />
         <ButtonComponent
+          id="grid"
           clickTrigger
           onClick={(e) => {}}
           tooltip={<GridComponent />}
           className="button-component"
           element={<BsGrid3X2GapFill size={24} />}
         />
-        <li style={{flex: 1}}>
+        <li style={{ flex: 1 }}></li>
 
-        </li>
-        
         <ButtonComponent
+          id="info"
           onClick={(e) => handleToolClick(e, "Info")}
           tooltip="Information"
           className="button-component"
           element={<BsInfoCircleFill size={24} />}
         />
-        
       </ul>
     );
   }
@@ -160,9 +167,10 @@ const Header: React.FC<{
   function unloadedHeader() {
     return (
       <ul>
-        <ButtonComponent
+        <CustomTooltip
+          id="dicom"
           onClick={handleLoadClick}
-          tooltip="Open Dicom folder"
+          tooltip="Open DICOM folder"
           className="button-component"
           element={<FaLungs size={24} />}
         />

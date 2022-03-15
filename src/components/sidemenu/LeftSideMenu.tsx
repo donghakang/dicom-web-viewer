@@ -19,6 +19,8 @@ const LeftSideMenu: React.FC = () => {
   const { currentSeries, series } = useSeriesState();
   const images = useAppSelector((state) => state.imageLoader.images);
 
+  console.log('re-render before series', series);
+
   return (
     <Styled.LeftSideMenu
       variants={variants}

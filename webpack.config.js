@@ -126,10 +126,12 @@ module.exports = {
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,
       skipWaiting: true,
+      maximumFileSizeToCacheInBytes: 15 * 1024 * 1024,
     }),
     new WebpackManifestPlugin({
       fileName: "manifest.json",
       basePath: "./dist",
+      
     }),
   ],
   mode: "development",

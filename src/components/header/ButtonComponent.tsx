@@ -3,6 +3,7 @@ import { IconContext } from "react-icons";
 import ReactTooltip from "react-tooltip";
 
 interface ButtonComponentInterface {
+  id: string;
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   tooltip: string | React.ReactNode;
   size?: number;
@@ -17,7 +18,7 @@ const ButtonComponent: React.FC<ButtonComponentInterface> = (props) => {
       <button
         onClick={props.onClick}
         data-tip
-        data-for={`${props.tooltip}`}
+        data-for={`${props.id}`}
         data-event={props.clickTrigger ? "click focus" : ""}
       >
         <IconContext.Provider
@@ -29,7 +30,7 @@ const ButtonComponent: React.FC<ButtonComponentInterface> = (props) => {
         </IconContext.Provider>
       </button>
       <ReactTooltip
-        id={`${props.tooltip}`}
+        id={`${props.id}`}
         className="custom-tooltip"
         place="bottom"
         effect="solid"
