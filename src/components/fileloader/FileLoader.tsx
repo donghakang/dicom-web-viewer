@@ -1,4 +1,8 @@
 import React, { useEffect } from "react";
+import { useSeriesDispatch } from "../../context/series/SeriesContext";
+import { useStatusDispatch } from "../../context/status/StatusContext";
+import { useAppDispatch } from "../../redux/hooks";
+import { reset } from "../../redux/reducers/imageSlice";
 
 interface FileLoaderInterface {
   fileRef: React.RefObject<HTMLInputElement>;
@@ -18,20 +22,30 @@ const FileLoader: React.FC<FileLoaderInterface> = ({
     }
   }, [fileRef]);
 
+  const seriesDispatch = useSeriesDispatch();
+  const statusDispatch = useStatusDispatch();
+  const imageDispatch = useAppDispatch();
+
   function handleOpenFolder(e: React.ChangeEvent<HTMLInputElement>) {
-    console.log('e!!!!', e)
+    console.log("e!!!!", e);
     if (e.target.files) {
-      console.log("e.target.files", e.target.files)
+      console.log("e.target.files", e.target.files);
       // 하나도 선택되지 않는다면, file들을 변경시키지 않는다.
-      if ( e.target.files.length > 0 ) {
+      if (e.target.files.length > 0) {
+        // RESET ?
+        seriesDispatch({
+          type: "RESET_SERIES",
+        });
+        imageDispatch(reset());
+        statusDispatch({ type: "NEXT" });
 
         const folder = e.target.files;
-        
+
         let tmp_files = [];
         for (let i = 0; i < folder.length; i++) {
           tmp_files.push(folder[i]);
         }
-        
+
         setFiles(tmp_files);
       }
     }

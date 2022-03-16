@@ -6,6 +6,7 @@ import ProgressBar from "./components/loader";
 import FileLoader from "./components/fileloader";
 import { SeriesProvider } from "./context/series/SeriesContext";
 import { MenubarProvider } from "./context/menubar/MenubarContext";
+import { StatusProvider } from "./context/status/StatusContext";
 
 const App: React.FC = () => {
   // File Loader
@@ -14,11 +15,13 @@ const App: React.FC = () => {
 
   return (
     <SeriesProvider>
-      <ProgressBar files={files} />
-      <MenubarProvider>
-        <Viewer fileRef={fileRef} />
-      </MenubarProvider>
-      <FileLoader fileRef={fileRef} files={files} setFiles={setFiles} />
+      <StatusProvider>
+        <ProgressBar files={files} />
+        <MenubarProvider>
+          <Viewer fileRef={fileRef} />
+        </MenubarProvider>
+        <FileLoader fileRef={fileRef} files={files} setFiles={setFiles} />
+      </StatusProvider>
     </SeriesProvider>
   );
 };

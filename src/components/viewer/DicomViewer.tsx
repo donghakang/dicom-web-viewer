@@ -20,6 +20,8 @@ import {
   changeWw,
   setDefaultData,
 } from "../../redux/reducers/viewportSlice";
+import { useStatusState } from "../../context/status/StatusContext";
+import { LoadViewer } from "../loader";
 
 const variants = {
   opened: {
@@ -77,6 +79,7 @@ const DicomViewer: React.FC = () => {
   const { viewport, row, col, tool, viewportData, allViewport } =
     useAppSelector((state) => state.viewport);
   const { currentSeries, series } = useSeriesState();
+  const { trial } = useStatusState();
   const dispatch = useAppDispatch();
 
   const [element, setElement] = useState(null);
@@ -188,9 +191,7 @@ const DicomViewer: React.FC = () => {
             ))}
         </Styled.DicomViewer>
       ) : (
-        <>
-          <StartViewer />
-        </>
+        <>{trial > 0 ? <LoadViewer /> : <StartViewer />}</>
       )}
     </>
   );

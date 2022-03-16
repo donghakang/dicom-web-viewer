@@ -35,7 +35,7 @@ const LeftSideMenu: React.FC = () => {
           />
         ))
       ) : (
-        <div>???</div>
+        <></>
       )}
     </Styled.LeftSideMenu>
   );
