@@ -85,7 +85,7 @@ const Viewer: React.FC<{ fileRef: React.RefObject<HTMLInputElement> }> = ({
       <Header useRef={fileRef} setTool={setTool} />
       <Styled.Viewer>
         <LeftSideMenu />
-        <DicomViewer />
+        <DicomViewer useRef={fileRef}/>
         <RightSideMenu />
       </Styled.Viewer>
     </>

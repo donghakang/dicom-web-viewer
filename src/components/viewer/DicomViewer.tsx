@@ -43,7 +43,9 @@ const variants = {
   closed: { x: 0, width: "100%", transition: { ease: "easeInOut" } },
 };
 
-const DicomViewer: React.FC = () => {
+const DicomViewer: React.FC<{ useRef: React.RefObject<HTMLInputElement> }> = ({
+  useRef,
+}) => {
   const { leftSideMenuOpened, rightSideMenuOpened } = useSideMenuState();
   const [tools, setTools] = useState([
     // Mouse
@@ -191,7 +193,7 @@ const DicomViewer: React.FC = () => {
             ))}
         </Styled.DicomViewer>
       ) : (
-        <>{trial > 0 ? <LoadViewer /> : <StartViewer />}</>
+        <>{trial > 0 ? <LoadViewer /> : <StartViewer useRef={useRef} />}</>
       )}
     </>
   );

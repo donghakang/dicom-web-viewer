@@ -98,7 +98,6 @@ const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
 
       items.push(dicomInfo);
       setProgress((prev) => prev + step);
-      console.log('LoadWADO', step)
     }
     items.sort((l, r) => {
       return l.instanceNumber - r.instanceNumber;

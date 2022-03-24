@@ -71,7 +71,7 @@ export const viewportSlice = createSlice({
       state,
       action: PayloadAction<{ windowWidth: number; windowCenter: number }>
     ) => {
-      console.log("set default data", action.payload);
+      // console.log("set default data", action.payload);
       const voi = action.payload;
       let prevDefaultData = [...state.defaultData];
       prevDefaultData.map((data, idx) => {

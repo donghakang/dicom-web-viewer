@@ -24,11 +24,11 @@ const SeriesComponent: React.FC<{
       (image) => image.series.seriesNumber === seriesInfo.seriesNumber
     );
 
-    console.log('=======================================')
-    console.log('🐲',images);
-    console.log("🦁", seriesInfo);
-    console.log(filteredImage);
-    console.log(filteredImage[Math.floor(filteredImage.length / 2)].imageId);
+    // console.log('=======================================')
+    // console.log('🐲',images);
+    // console.log("🦁", seriesInfo);
+    // console.log(filteredImage);
+    // console.log(filteredImage[Math.floor(filteredImage.length / 2)].imageId);
 
     return filteredImage[Math.floor(filteredImage.length / 2)].imageId;
   }
