@@ -41,14 +41,19 @@ const FileLoader: React.FC<FileLoaderInterface> = ({
 
         let tmp_files = [];
         for (let i = 0; i < folder.length; i++) {
-          const filename = folder[i].name
-          const fileFormat = filename.split('.')[1] ? filename.split('.')[1].toLowerCase() : ''
-          if (fileFormat === 'dcm') {
+          const filename = folder[i].name;
+          const fileSplitter = filename.split(".");
+          const fileFormat = fileSplitter[fileSplitter.length - 1]
+            ? fileSplitter[fileSplitter.length - 1].toLowerCase()
+            : "";
+          if (fileFormat === "dcm") {
             tmp_files.push(folder[i]);
           }
         }
 
         setFiles(tmp_files);
+      } else {
+        console.log("cancel");
       }
     }
   }

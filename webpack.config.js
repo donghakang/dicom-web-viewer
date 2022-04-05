@@ -1,21 +1,50 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
-const WorkboxPlugin = require("workbox-webpack-plugin");
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 
+// workbox
+const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
+const { InjectManifest } = require("workbox-webpack-plugin");
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
+
+const mode = process.env.NODE_ENV || "development";
+
+const SRC_DIR = path.join(__dirname, "./src");
+const DIST_DIR = path.join(__dirname, "./dist");
+const PUBLIC_DIR = path.join(__dirname, "./public");
+
+console.log("path", path.join(__dirname));
+console.log();
+
 module.exports = {
-  entry: path.resolve(__dirname, "src/index.tsx"),
+  mode,
+  entry: {
+    app: path.join(__dirname, "src", "index.tsx"),
+  },
+  devServer: {
+    hot: true,
+    host: "localhost",
+    port: 5500,
+  },
+  output: {
+    filename: "[name].js",
+    path: DIST_DIR,
+  },
   resolve: {
-    extensions: [".tsx", ".ts", ".js", ".jsx"],
+    extensions: [".ts", ".tsx", ".js"],
+    alias: {
+      "cornerstone-wado-image-loader":
+        "cornerstone-wado-image-loader/dist/dynamic-import/cornerstoneWADOImageLoader.min.js",
+    },
   },
   module: {
     rules: [
       {
-        test: /\.(js)x?$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: [
           {
@@ -24,13 +53,9 @@ module.exports = {
         ],
       },
       {
-        test: /\.(ts)x?$/,
+        test: /\.(ts|tsx)$/,
+        use: "ts-loader",
         exclude: /node_modules/,
-        use: [
-          {
-            loader: "ts-loader",
-          },
-        ],
       },
       {
         test: /\.html$/,
@@ -89,13 +114,6 @@ module.exports = {
       },
     ],
   },
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "main.[contenthash].js",
-  },
-  devServer: {
-    historyApiFallback: true,
-  },
   plugins: [
     new webpack.DefinePlugin({
       "process.env.REACT_APP_APIKEY": JSON.stringify(
@@ -121,19 +139,32 @@ module.exports = {
       ),
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "public/index.html"),
+      template: "./public/index.html",
+      templateParameters: {
+        env: process.env.NODE_ENV === "production" ? "" : "[DEV]",
+      },
+      minify:
+        process.env.NODE_ENV === "production"
+          ? { collapseWhitespace: true, removeComments: true }
+          : false,
     }),
-    new WorkboxPlugin.GenerateSW({
-      clientsClaim: true,
-      skipWaiting: true,
-      maximumFileSizeToCacheInBytes: 15 * 1024 * 1024,
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: "./node_modules/cornerstone-wado-image-loader/dist/dynamic-import",
+          to: DIST_DIR,
+        },
+      ],
+    }),
+    new InjectManifest({
+      swSrc: "./src/service-worker.ts",
+      swDest: "service-worker.js",
+      maximumFileSizeToCacheInBytes: 20 * 1024 * 1024,
     }),
     new WebpackManifestPlugin({
-      fileName: "manifest.json",
-      basePath: "./dist",
-      
+      filename: "./public/manifest.json",
+      basePath: path.join(__dirname, "./dist"),
     }),
   ],
-  mode: "development",
-  stats: "errors-only",
 };

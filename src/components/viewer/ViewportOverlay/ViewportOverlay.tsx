@@ -76,8 +76,8 @@ const ViewportOverlay: React.FC<ViewportOverlayInterface> = (props) => {
 
   const frameRate = formatNumberPrecision(1000 / frameTime, 1);
   const compression = getCompression(imageId);
-  const wwwc = `W: ${windowWidth.toFixed(0)}
-   L: ${windowCenter.toFixed(0)}`;
+  const ww = windowWidth ? `W: ${windowWidth.toFixed(0)}` : '';
+  const wc = windowCenter ? `L: ${windowCenter.toFixed(0)}` : '';
   const imageDimensions = `${columns} x ${rows}`;
 
   const normal = (
@@ -99,7 +99,7 @@ const ViewportOverlay: React.FC<ViewportOverlayInterface> = (props) => {
       </div>
       <div className="bottom-right overlay-element">
         <div>Zoom: {zoomPercentage}%</div>
-        <div>{wwwc}</div>
+        <div>{ww + '  ' + wc}</div>
         <div className="compressionIndicator">{compression}</div>
       </div>
       <div className="bottom-left overlay-element">

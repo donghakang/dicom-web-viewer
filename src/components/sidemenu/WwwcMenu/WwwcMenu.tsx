@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Slider, InputNumber, Row, Col } from "antd";
-import "antd/dist/antd.less";
+// import "antd/dist/antd.less";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 
 import { Box, Grid } from "@mui/material";

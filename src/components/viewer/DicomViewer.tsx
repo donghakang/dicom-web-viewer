@@ -78,6 +78,8 @@ const DicomViewer: React.FC<{ useRef: React.RefObject<HTMLInputElement> }> = ({
   ]);
 
   const images = useAppSelector((state) => state.imageLoader.images);
+
+ 
   const { viewport, row, col, tool, viewportData, allViewport } =
     useAppSelector((state) => state.viewport);
   const { currentSeries, series } = useSeriesState();

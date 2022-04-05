@@ -7,12 +7,11 @@ import store from "./redux/store";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./assets/styles/theme";
 import GlobalStyle from "./assets/styles/GlobalStyle";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-// Import the functions you need from the SDKs you need
+import { registerServiceWorker } from "./serviceWorkerRegistration";
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
-initCornerstone();
+
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <GlobalStyle />
@@ -23,16 +22,6 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-// // If you want your app to work offline and load faster, you can change
-// // unregister() to register() below. Note this comes with some pitfalls.
-// // Learn more about service workers: https://cra.link/PWA
-// serviceWorkerRegistration.register();
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -43,19 +32,12 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+logEvent(analytics, 'opened_dicom_viewer');
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/service-worker.js")
-      .then((registration: any) => {
-        console.log("SW registered: ", registration);
-      })
-      .catch((registrationError: any) => {
-        console.log("SW registration failed: ", registrationError);
-      });
-  });
-}
+
+// service worker
+registerServiceWorker();

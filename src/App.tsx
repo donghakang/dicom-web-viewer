@@ -7,9 +7,12 @@ import FileLoader from "./components/fileloader";
 import { SeriesProvider } from "./context/series/SeriesContext";
 import { MenubarProvider } from "./context/menubar/MenubarContext";
 import { StatusProvider } from "./context/status/StatusContext";
+import Viewport from "./components/viewport";
+import initCornerstone from "./components/cornerstone/init";
 
 const App: React.FC = () => {
   // File Loader
+  initCornerstone();
   const fileRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<File[]>([]);
 

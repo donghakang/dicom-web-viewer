@@ -1,8 +1,9 @@
-import { CornerstoneImageInterface } from "../../@types/CornerstoneImageInterface";
+
 
 
 export function getDicomPatientName(image: any) {
   const value = image.data.string("x00100010");
+  console.log('value patient name', image, typeof(image), value, typeof(value))
   if (value === undefined) {
     return;
   }
