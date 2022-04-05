@@ -46,7 +46,9 @@ const FileLoader: React.FC<FileLoaderInterface> = ({
           const fileFormat = fileSplitter[fileSplitter.length - 1]
             ? fileSplitter[fileSplitter.length - 1].toLowerCase()
             : "";
-          if (fileFormat === "dcm") {
+
+          // console.log(e.target.files)
+          if (fileFormat === "dcm" || fileSplitter.length === 1) {
             tmp_files.push(folder[i]);
           }
         }
