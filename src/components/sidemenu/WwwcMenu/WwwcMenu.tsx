@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import { Slider, InputNumber, Row, Col } from "antd";
-// import "antd/dist/antd.less";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 
-import { Box, Grid } from "@mui/material";
-import { CustomSlider, Input } from "../../../assets/styles/mui-style";
-import { changeWc, changeWw } from "../../../redux/reducers/viewportSlice";
+import { Box, Grid } from '@mui/material';
+import { CustomSlider, Input } from '../../../assets/styles/mui-style';
+import { changeWc, changeWw } from '../../../redux/reducers/viewportSlice';
 
 const Ww: React.FC<{ viewport: number }> = ({ viewport }) => {
   const tools = useAppSelector((state) => state.viewport.viewportData);
@@ -22,7 +20,7 @@ const Ww: React.FC<{ viewport: number }> = ({ viewport }) => {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
     //TODO: change 1 to default value
-    const val = event.target.value === "" ? 1 : Number(event.target.value);
+    const val = event.target.value === '' ? 1 : Number(event.target.value);
     dispatch(changeWw({ viewport: viewport, ww: val }));
   }
 
@@ -34,7 +32,7 @@ const Ww: React.FC<{ viewport: number }> = ({ viewport }) => {
             min={0}
             max={4000}
             step={1}
-            onChange={(e, v, a) => onSlideChange(e, v as number)}
+            onChange={(e, v) => onSlideChange(e, v as number)}
             aria-label="Default"
             valueLabelDisplay="auto"
             value={tools[viewport].voi.windowWidth}
@@ -50,8 +48,8 @@ const Ww: React.FC<{ viewport: number }> = ({ viewport }) => {
               step: 1,
               min: 0,
               max: 4000,
-              type: "number",
-              "aria-labelledby": "input-slider",
+              type: 'number',
+              'aria-labelledby': 'input-slider',
             }}
           />
         </Grid>
@@ -74,7 +72,7 @@ const Wc: React.FC<{ viewport: number }> = ({ viewport }) => {
   function onInputChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    const val = event.target.value === "" ? 1 : Number(event.target.value);
+    const val = event.target.value === '' ? 1 : Number(event.target.value);
     dispatch(changeWc({ viewport: viewport, wc: val }));
   }
 
@@ -86,7 +84,7 @@ const Wc: React.FC<{ viewport: number }> = ({ viewport }) => {
             min={-4000}
             max={4000}
             step={1}
-            onChange={(e, v, a) => onSlideChange(e, v as number)}
+            onChange={(e, v) => onSlideChange(e, v as number)}
             aria-label="Default"
             valueLabelDisplay="auto"
             value={tools[viewport].voi.windowCenter}
@@ -102,8 +100,8 @@ const Wc: React.FC<{ viewport: number }> = ({ viewport }) => {
               step: 1,
               min: -4000,
               max: 4000,
-              type: "number",
-              "aria-labelledby": "input-slider",
+              type: 'number',
+              'aria-labelledby': 'input-slider',
             }}
           />
         </Grid>
@@ -128,14 +126,12 @@ const WwwcMenu: React.FC = () => {
       <span>Level: </span>
       <Wc viewport={viewport} />
       <div className="preset-container multiple-presets">
-        <button onClick={(e) => applyPreset(1500, -500)}>Lung</button>
-        <button onClick={(e) => applyPreset(750, -700)}>
-          Emphysema Narrow
-        </button>
+        <button onClick={() => applyPreset(1500, -500)}>Lung</button>
+        <button onClick={() => applyPreset(750, -700)}>Emphysema Narrow</button>
       </div>
       <div className="preset-container">
         <button
-          onClick={(e) =>
+          onClick={() =>
             applyPreset(
               defaultData[viewport].voi.windowWidth,
               defaultData[viewport].voi.windowCenter

@@ -1,8 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
-import imageReducer from "./reducers/imageSlice";
-import viewportReducer from './reducers/viewportSlice'
-import { composeWithDevTools } from 'redux-devtools-extension'; // 리덕스 개발자 도구
-import logger from 'redux-logger';
+import { configureStore } from '@reduxjs/toolkit';
+import imageReducer from './reducers/imageSlice';
+import viewportReducer from './reducers/viewportSlice';
 
 const store = configureStore({
   reducer: {

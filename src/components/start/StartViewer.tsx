@@ -1,28 +1,45 @@
-import React from "react";
-import { GridLoader } from "react-spinners";
-import * as Styled from "./style";
-import { theme } from "../../assets/styles/theme";
+import React from 'react';
+import { GridLoader } from 'react-spinners';
+import * as Styled from './style';
+import { theme } from '../../assets/styles/theme';
+import { BsFileEarmark, BsFolder2 } from 'react-icons/bs';
 
-const StartViewer: React.FC<{ useRef: React.RefObject<HTMLInputElement> }> = ({
-  useRef,
-}) => {
-  function handleLoadClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    if (useRef.current !== null) {
-      useRef.current.click();
+const StartViewer: React.FC<{
+  fileRef: React.RefObject<HTMLInputElement>;
+  folderRef: React.RefObject<HTMLInputElement>;
+}> = ({ fileRef, folderRef }) => {
+  function handleFileLoadClick() {
+    if (fileRef.current !== null) {
+      fileRef.current.click();
+    }
+  }
+  function handleFolderLoadClick() {
+    if (folderRef.current !== null) {
+      folderRef.current.click();
     }
   }
 
   return (
-    <Styled.StartViewer onClick={handleLoadClick}>
+    <Styled.StartViewer>
       <div className="container">
-        <div className={"grid-loader"}>
+        <div className={'grid-loader'}>
           <GridLoader size={15} margin={2} color={theme.color.primary} />
         </div>
-        <div className={"loader-text"}>
+        <div className={'loader-text'}>
           <h1>
             Welcome to <span>DICOM</span> Viewer
           </h1>
-          <span>Press Lung button on the top right to open DICOM folder</span>
+          <span>The most simple DICOM Web viewer. Click buttons to start</span>
+        </div>
+        <div className="button-container">
+          <button onClick={handleFileLoadClick}>
+            <span>Open files</span>
+            <BsFileEarmark size={20} />
+          </button>
+          <button onClick={handleFolderLoadClick}>
+            <span>Open Folder</span>
+            <BsFolder2 size={20} />
+          </button>
         </div>
       </div>
     </Styled.StartViewer>

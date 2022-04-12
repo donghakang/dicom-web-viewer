@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 interface ViewportInterface {
   allViewport: boolean;
@@ -29,7 +29,7 @@ const initialState: ViewportInterface = {
   row: 1,
   col: 1,
   deidentification: false,
-  tool: "Pan",
+  tool: 'Pan',
   defaultData: Array(6).fill({
     viewport: 0,
     scale: 1,
@@ -43,7 +43,7 @@ const initialState: ViewportInterface = {
 };
 
 export const viewportSlice = createSlice({
-  name: "viewport",
+  name: 'viewport',
   initialState,
   reducers: {
     changeMode: (state, action: PayloadAction<string>) => {
@@ -73,7 +73,7 @@ export const viewportSlice = createSlice({
     ) => {
       // console.log("set default data", action.payload);
       const voi = action.payload;
-      let prevDefaultData = [...state.defaultData];
+      const prevDefaultData = [...state.defaultData];
       prevDefaultData.map((data, idx) => {
         data.voi = voi;
         data.viewport = idx;
@@ -84,8 +84,8 @@ export const viewportSlice = createSlice({
       state,
       action: PayloadAction<{ viewport: number; scale: number }>
     ) => {
-      let prevViewportData = [...state.viewportData];
-      let selectedViewportData = prevViewportData[action.payload.viewport];
+      const prevViewportData = [...state.viewportData];
+      const selectedViewportData = prevViewportData[action.payload.viewport];
       selectedViewportData.scale = action.payload.scale;
 
       state.viewportData = prevViewportData;
@@ -94,8 +94,8 @@ export const viewportSlice = createSlice({
       state,
       action: PayloadAction<{ viewport: number; ww: number }>
     ) => {
-      let prevViewportData = [...state.viewportData];
-      let selectedViewportData = prevViewportData[action.payload.viewport];
+      const prevViewportData = [...state.viewportData];
+      const selectedViewportData = prevViewportData[action.payload.viewport];
       selectedViewportData.voi = {
         ...selectedViewportData.voi,
         windowWidth: action.payload.ww,
@@ -107,8 +107,8 @@ export const viewportSlice = createSlice({
       state,
       action: PayloadAction<{ viewport: number; wc: number }>
     ) => {
-      let prevViewportData = [...state.viewportData];
-      let selectedViewportData = prevViewportData[action.payload.viewport];
+      const prevViewportData = [...state.viewportData];
+      const selectedViewportData = prevViewportData[action.payload.viewport];
       selectedViewportData.voi = {
         ...selectedViewportData.voi,
         windowCenter: action.payload.wc,

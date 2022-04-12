@@ -1,60 +1,61 @@
-import React, { useCallback, useEffect, useState } from "react";
-import Header from "../header";
-import { RightSideMenu, LeftSideMenu } from "../sidemenu";
-import { useSideMenuDispatch } from "../../context/menubar/MenubarContext";
+import React, { useCallback, useEffect, useState } from 'react';
+import Header from '../header';
+import { RightSideMenu, LeftSideMenu } from '../sidemenu';
+import { useSideMenuDispatch } from '../../context/menubar/MenubarContext';
 
-import DicomViewer from "./DicomViewer";
+import DicomViewer from './DicomViewer';
 
-import * as Styled from "./style";
-import { useAppDispatch } from "../../redux/hooks";
+import * as Styled from './style';
+import { useAppDispatch } from '../../redux/hooks';
 import {
   allViewportOff,
   allViewportOn,
   changeDeidentification,
   changeMode,
-} from "../../redux/reducers/viewportSlice";
+} from '../../redux/reducers/viewportSlice';
 
-const Viewer: React.FC<{ fileRef: React.RefObject<HTMLInputElement> }> = ({
-  fileRef,
-}) => {
-  const [tool, setTool] = useState<string>("Pan");
+const Viewer: React.FC<{
+  fileRef: React.RefObject<HTMLInputElement>;
+  folderRef: React.RefObject<HTMLInputElement>;
+}> = ({ fileRef, folderRef }) => {
+  const [, setTool] = useState<string>('Pan');
   const dispatch = useAppDispatch();
   const sideMenuDispatch = useSideMenuDispatch();
 
   // hot key setup
   const handleKeyPress = useCallback((event) => {
     switch (event.key) {
-      case "Shift":
+      case 'Shift':
         dispatch(allViewportOn());
         break;
-      case "s":
+      case 's':
         // scale hot key
-        sideMenuDispatch({ type: "RIGHT_OPEN" });
-        dispatch(changeMode("Zoom"));
+        sideMenuDispatch({ type: 'RIGHT_OPEN' });
+        dispatch(changeMode('Zoom'));
         break;
-      case "m":
+      case 'm':
         // pan
-        sideMenuDispatch({ type: "RIGHT_CLOSE" });
-        dispatch(changeMode("Pan"));
+        sideMenuDispatch({ type: 'RIGHT_CLOSE' });
+        dispatch(changeMode('Pan'));
         break;
-      case "t":
+      case 't':
         // threshold
-        sideMenuDispatch({ type: "RIGHT_OPEN" });
-        dispatch(changeMode("Wwwc"));
+        sideMenuDispatch({ type: 'RIGHT_OPEN' });
+        dispatch(changeMode('Wwwc'));
         break;
-      case "z":
+      case 'z':
         // Magnify
-        sideMenuDispatch({ type: "RIGHT_CLOSE" });
-        dispatch(changeMode("Magnify"));
+        sideMenuDispatch({ type: 'RIGHT_CLOSE' });
+        dispatch(changeMode('Magnify'));
         break;
-      case "i":
+      case 'i':
         // Info
-        sideMenuDispatch({ type: "RIGHT_OPEN" });
-        dispatch(changeMode("Info"));
+        sideMenuDispatch({ type: 'RIGHT_OPEN' });
+        dispatch(changeMode('Info'));
         break;
-      case "l":
+      case 'l':
         // Lock
-        sideMenuDispatch({ type: "RIGHT_CLOSE" });
+        sideMenuDispatch({ type: 'RIGHT_CLOSE' });
         dispatch(changeDeidentification());
         break;
     }
@@ -62,7 +63,7 @@ const Viewer: React.FC<{ fileRef: React.RefObject<HTMLInputElement> }> = ({
 
   const handleKeyRelease = useCallback((event) => {
     switch (event.key) {
-      case "Shift":
+      case 'Shift':
         dispatch(allViewportOff());
         break;
     }
@@ -70,22 +71,22 @@ const Viewer: React.FC<{ fileRef: React.RefObject<HTMLInputElement> }> = ({
 
   useEffect(() => {
     // attach the event listener
-    document.addEventListener("keydown", handleKeyPress);
-    document.addEventListener("keyup", handleKeyRelease);
-    
+    document.addEventListener('keydown', handleKeyPress);
+    document.addEventListener('keyup', handleKeyRelease);
+
     // remove the event listener
     return () => {
-      document.removeEventListener("keydown", handleKeyPress);
-      document.removeEventListener("keyup", handleKeyRelease);
+      document.removeEventListener('keydown', handleKeyPress);
+      document.removeEventListener('keyup', handleKeyRelease);
     };
   }, [handleKeyPress]);
 
   return (
     <>
-      <Header useRef={fileRef} setTool={setTool} />
+      <Header fileRef={fileRef} folderRef={folderRef} setTool={setTool} />
       <Styled.Viewer>
         <LeftSideMenu />
-        <DicomViewer useRef={fileRef}/>
+        <DicomViewer fileRef={fileRef} folderRef={folderRef} />
         <RightSideMenu />
       </Styled.Viewer>
     </>

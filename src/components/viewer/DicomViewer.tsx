@@ -1,92 +1,90 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from 'react';
 // import CornerstoneViewport from "react-cornerstone-viewport";
-import CornerstoneViewport from "react-cornerstone-viewport";
-import { useSelector } from "react-redux";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import StartViewer from "../start";
-import DicomViewerLoader from "./DicomViewerLoader";
-import cornerstone from "cornerstone-core";
+import CornerstoneViewport from 'react-cornerstone-viewport';
 
-import * as Styled from "./style";
-import ViewportOverlay from "./ViewportOverlay";
-import ImageScrollbar from "./ImageScrollbar";
-import { useSideMenuState } from "../../context/menubar/MenubarContext";
-import { useSeriesState } from "../../context/series/SeriesContext";
-import { convertToFalseColorImage } from "cornerstone-core";
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import StartViewer from '../start';
+import DicomViewerLoader from './DicomViewerLoader';
+
+import * as Styled from './style';
+import ViewportOverlay from './ViewportOverlay';
+import ImageScrollbar from './ImageScrollbar';
+import { useSideMenuState } from '../../context/menubar/MenubarContext';
+import { useSeriesState } from '../../context/series/SeriesContext';
 import {
   changeScale,
   changeViewport,
   changeWc,
   changeWw,
   setDefaultData,
-} from "../../redux/reducers/viewportSlice";
-import { useStatusState } from "../../context/status/StatusContext";
-import { LoadViewer } from "../loader";
+} from '../../redux/reducers/viewportSlice';
+import { useStatusState } from '../../context/status/StatusContext';
+import { LoadViewer } from '../loader';
 
 const variants = {
   opened: {
-    x: "var(--left-side-menu-width)",
+    x: 'var(--left-side-menu-width)',
     width:
-      "calc(100% - var(--right-side-menu-width) - var(--left-side-menu-width))",
-    transition: { ease: "easeInOut" },
+      'calc(100% - var(--right-side-menu-width) - var(--left-side-menu-width))',
+    transition: { ease: 'easeInOut' },
   },
   rightOpened: {
     x: 0,
-    width: "calc(100% - var(--right-side-menu-width))",
-    transition: { ease: "easeInOut" },
+    width: 'calc(100% - var(--right-side-menu-width))',
+    transition: { ease: 'easeInOut' },
   },
   leftOpened: {
-    x: "var(--left-side-menu-width)",
-    width: "calc(100% - var(--left-side-menu-width))",
-    transition: { ease: "easeInOut" },
+    x: 'var(--left-side-menu-width)',
+    width: 'calc(100% - var(--left-side-menu-width))',
+    transition: { ease: 'easeInOut' },
   },
-  closed: { x: 0, width: "100%", transition: { ease: "easeInOut" } },
+  closed: { x: 0, width: '100%', transition: { ease: 'easeInOut' } },
 };
 
-const DicomViewer: React.FC<{ useRef: React.RefObject<HTMLInputElement> }> = ({
-  useRef,
-}) => {
+const DicomViewer: React.FC<{
+  fileRef: React.RefObject<HTMLInputElement>;
+  folderRef: React.RefObject<HTMLInputElement>;
+}> = ({ fileRef, folderRef }) => {
   const { leftSideMenuOpened, rightSideMenuOpened } = useSideMenuState();
-  const [tools, setTools] = useState([
+  const [tools] = useState([
     // Mouse
     {
-      name: "Wwwc",
-      mode: "active",
+      name: 'Wwwc',
+      mode: 'active',
       modeOptions: { mouseButtonMask: 1 },
     },
     {
-      name: "Zoom",
-      mode: "active",
+      name: 'Zoom',
+      mode: 'active',
       modeOptions: { mouseButtonMask: 2 },
     },
     {
-      name: "Pan",
-      mode: "active",
+      name: 'Pan',
+      mode: 'active',
       modeOptions: { mouseButtonMask: 4 },
     },
     {
-      name: "Magnify",
-      mode: "active",
+      name: 'Magnify',
+      mode: 'active',
       modeOptions: { mouseButtonMask: 1 },
     },
     // Scroll
-    { name: "StackScrollMouseWheel", mode: "active" },
+    { name: 'StackScrollMouseWheel', mode: 'active' },
     // Touch
-    { name: "PanMultiTouch", mode: "active" },
-    { name: "ZoomTouchPinch", mode: "active" },
-    { name: "StackScrollMultiTouch", mode: "active" },
+    { name: 'PanMultiTouch', mode: 'active' },
+    { name: 'ZoomTouchPinch', mode: 'active' },
+    { name: 'StackScrollMultiTouch', mode: 'active' },
   ]);
 
   const images = useAppSelector((state) => state.imageLoader.images);
 
- 
   const { viewport, row, col, tool, viewportData, allViewport } =
     useAppSelector((state) => state.viewport);
   const { currentSeries, series } = useSeriesState();
   const { trial } = useStatusState();
   const dispatch = useAppDispatch();
 
-  const [element, setElement] = useState(null);
+  const [, setElement] = useState(null);
 
   function loadingCornerstoneViewport() {
     return images.length > 0 && series.length > 0;
@@ -105,18 +103,18 @@ const DicomViewer: React.FC<{ useRef: React.RefObject<HTMLInputElement> }> = ({
           animate={
             rightSideMenuOpened
               ? leftSideMenuOpened
-                ? "opened"
-                : "rightOpened"
+                ? 'opened'
+                : 'rightOpened'
               : leftSideMenuOpened
-              ? "leftOpened"
-              : "closed"
+              ? 'leftOpened'
+              : 'closed'
           }
           style={{
             gridTemplateColumns: `repeat(${col}, ${100 / col}%)`,
             gridTemplateRows: `repeat(${row}, ${100 / row}%)`,
           }}
         >
-          {Array.apply(null, Array(row * col))
+          {Array(row * col)
             .map((x, i) => i)
             .map((i) => (
               <CornerstoneViewport
@@ -126,8 +124,8 @@ const DicomViewer: React.FC<{ useRef: React.RefObject<HTMLInputElement> }> = ({
                 }}
                 tools={tools}
                 style={{
-                  width: "100%",
-                  height: "100%",
+                  width: '100%',
+                  height: '100%',
                 }}
                 imageIds={images
                   .filter(
@@ -137,7 +135,7 @@ const DicomViewer: React.FC<{ useRef: React.RefObject<HTMLInputElement> }> = ({
                     return image.imageId;
                   })}
                 className={
-                  allViewport || viewport === i ? "active viewport" : "viewport"
+                  allViewport || viewport === i ? 'active viewport' : 'viewport'
                 }
                 activeTool={tool}
                 loadingIndicatorComponent={DicomViewerLoader}
@@ -149,7 +147,7 @@ const DicomViewer: React.FC<{ useRef: React.RefObject<HTMLInputElement> }> = ({
                   setElement(cornerstoneElement);
 
                   cornerstoneElement.addEventListener(
-                    "cornerstonenewimage",
+                    'cornerstonenewimage',
                     (NewImageEvent: any) => {
                       const viewport = NewImageEvent.detail.image;
                       // set default window center, window width
@@ -163,7 +161,7 @@ const DicomViewer: React.FC<{ useRef: React.RefObject<HTMLInputElement> }> = ({
                   );
 
                   cornerstoneElement.addEventListener(
-                    "cornerstoneimagerendered",
+                    'cornerstoneimagerendered',
                     (imageRenderedEvent: any) => {
                       const v = imageRenderedEvent.detail.viewport;
                       dispatch(changeScale({ viewport: i, scale: v.scale }));
@@ -195,7 +193,13 @@ const DicomViewer: React.FC<{ useRef: React.RefObject<HTMLInputElement> }> = ({
             ))}
         </Styled.DicomViewer>
       ) : (
-        <>{trial > 0 ? <LoadViewer /> : <StartViewer useRef={useRef} />}</>
+        <>
+          {trial > 0 ? (
+            <LoadViewer />
+          ) : (
+            <StartViewer fileRef={fileRef} folderRef={folderRef} />
+          )}
+        </>
       )}
     </>
   );
