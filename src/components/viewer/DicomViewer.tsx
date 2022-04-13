@@ -115,8 +115,8 @@ const DicomViewer: React.FC<{
           }}
         >
           {Array(row * col)
-            .map((x, i) => i)
-            .map((i) => (
+            .fill(0)
+            .map((x, i) => (
               <CornerstoneViewport
                 key={i}
                 setViewportActive={() => {
