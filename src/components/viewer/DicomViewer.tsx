@@ -7,7 +7,7 @@ import StartViewer from '../start';
 import DicomViewerLoader from './DicomViewerLoader';
 
 import * as Styled from './style';
-import ViewportOverlay from './ViewportOverlay';
+import { ViewportOverlay } from 'react-cornerstone-viewport';
 import ImageScrollbar from './ImageScrollbar';
 import { useSideMenuState } from '../../context/menubar/MenubarContext';
 import { useSeriesState } from '../../context/series/SeriesContext';

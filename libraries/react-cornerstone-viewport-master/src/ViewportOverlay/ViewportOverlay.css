@@ -2,8 +2,7 @@
   display: none;
 }
 .ViewportOverlay {
-  /* color: #9ccef9; */
-  color: greenyellow;
+  color: #00e0c7;
 }
 .ViewportOverlay .overlay-element {
   position: absolute;

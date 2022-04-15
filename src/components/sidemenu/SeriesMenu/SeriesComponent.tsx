@@ -1,13 +1,22 @@
-import React from "react";
-import { useAppSelector } from "../../../redux/hooks";
-import CornerstoneViewport from "react-cornerstone-viewport";
-import { ViewportOverlayInterface } from "../../viewer/ViewportOverlay/ViewportOverlay";
-import * as Styled from "../style";
+import React from 'react';
+import { useAppSelector } from '../../../redux/hooks';
+import CornerstoneViewport from 'react-cornerstone-viewport';
+import * as Styled from '../style';
 import {
   useSeriesDispatch,
   useSeriesState,
-} from "../../../context/series/SeriesContext";
-import { BiBookAlt, BiImages } from "react-icons/bi";
+} from '../../../context/series/SeriesContext';
+import { BiBookAlt, BiImages } from 'react-icons/bi';
+
+interface ViewportOverlayInterface {
+  scale: number;
+  windowWidth: number;
+  windowCenter: number;
+  imageId: string;
+  imageIndex: number;
+  stackSize: number;
+}
+
 const SeriesComponent: React.FC<{
   seriesInfo: {
     seriesNumber: number;
@@ -37,19 +46,19 @@ const SeriesComponent: React.FC<{
     <Styled.SeriesComponent
       onClick={() =>
         dispatch({
-          type: "SET_CURRENT_SERIES",
+          type: 'SET_CURRENT_SERIES',
           currentSeries: seriesInfo.seriesNumber,
         })
       }
     >
       <div
         className={`viewport-container ${
-          currentSeries === seriesInfo.seriesNumber && "active"
+          currentSeries === seriesInfo.seriesNumber && 'active'
         }`}
       >
         <CornerstoneViewport
           key={0}
-          style={{ width: "240px", height: "180px" }}
+          style={{ width: '240px', height: '180px' }}
           imageIds={[getPreviewImage()]}
           tools={[]}
           viewportOverlayComponent={(props: ViewportOverlayInterface) => <></>}

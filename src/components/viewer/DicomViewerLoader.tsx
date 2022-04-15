@@ -1,15 +1,15 @@
-import React from "react";
-import { GridLoader } from "react-spinners";
-import * as Styled from "./style";
-import { theme } from '../../assets/styles/theme'
+import React from 'react';
+import { GridLoader } from 'react-spinners';
+import * as Styled from './style';
+import { theme } from '../../assets/styles/theme';
 
 function DicomViewerLoader() {
   return (
     <Styled.DicomViewerLoader>
-      <div className={"grid-loader"}>
+      <div className={'grid-loader'}>
         <GridLoader size={15} margin={2} color={theme.color.primary} />
       </div>
-      <div className={"loader-text"}>Loading ...</div>
+      <div className={'loader-text'}>Loading ...</div>
     </Styled.DicomViewerLoader>
   );
 }

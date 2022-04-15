@@ -6,13 +6,8 @@ import dicomParser from 'dicom-parser';
 import { helpers } from '../helpers/index.js';
 import './ViewportOverlay.css';
 
-const {
-  formatPN,
-  formatDA,
-  formatNumberPrecision,
-  formatTM,
-  isValidNumber,
-} = helpers;
+const { formatPN, formatDA, formatNumberPrecision, formatTM, isValidNumber } =
+  helpers;
 
 function getCompression(imageId) {
   const generalImageModule =

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { motion } from "framer-motion";
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
 export const Viewer = styled.div`
   width: 100%;
   height: calc(100vh - var(--header-height));
@@ -8,12 +8,16 @@ export const Viewer = styled.div`
 
 export const DicomViewer = styled(motion.div)`
   display: grid;
-  
-  .viewport { 
+
+  .viewport {
     border: 3px solid black;
   }
   .active {
-    border: 3px solid ${({ theme }) => theme.color.primary3};;
+    border: 3px solid ${({ theme }) => theme.color.primary3};
+  }
+
+  * {
+    color: ${({ theme }) => theme.color.primary};
   }
 `;
 
