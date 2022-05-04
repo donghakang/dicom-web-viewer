@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { motion } from "framer-motion";
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const RightSideMenu = styled(motion.div)`
   position: fixed;
@@ -54,7 +54,7 @@ export const RightSideMenu = styled(motion.div)`
   table {
     tr {
       line-height: 40px;
-      border-bottom: 1px solid ${({ theme }) => theme.color.primary3 + "99"};
+      border-bottom: 1px solid ${({ theme }) => theme.color.primary3 + '99'};
     }
     th {
       color: ${({ theme }) => theme.color.primary2};
@@ -93,6 +93,16 @@ export const SeriesComponent = styled.div`
 
   .active {
     border: 2px solid ${({ theme }) => theme.color.primary};
+  }
+
+  .no-pixel-data-viewport {
+    width: 240px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
   }
 
   .series-description-container {

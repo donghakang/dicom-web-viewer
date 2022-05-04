@@ -1,16 +1,22 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 interface ImageInterface {
-    images: any[]
+  images: {
+    id: number;
+    patient_id: string;
+    series_id: string;
+    isImage: boolean;
+    data: any[];
+  }[];
 }
 
 const initialState: ImageInterface = {
-    images: []
-}
+  images: [],
+};
 
 export const imageSlice = createSlice({
-  name: "imageLoader",
+  name: 'imageLoader',
   initialState,
   reducers: {
     reset: (state) => {
@@ -22,9 +28,8 @@ export const imageSlice = createSlice({
   },
 });
 
+export const { reset, setImages } = imageSlice.actions;
 
-export const { reset, setImages } = imageSlice.actions
+export const imageLoader = (state: RootState) => state.imageLoader.images;
 
-export const imageLoader = (state: RootState) => state.imageLoader.images
-
-export default imageSlice.reducer
+export default imageSlice.reducer;

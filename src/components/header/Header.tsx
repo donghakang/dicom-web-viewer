@@ -35,7 +35,6 @@ const Header: React.FC<{
   const sideMenuDispatch = useSideMenuDispatch();
   const { deidentification } = useAppSelector((state) => state.viewport);
   const images = useAppSelector((state) => state.imageLoader.images);
-  const { series } = useSeriesState();
 
   function handleLoadFileClick() {
     if (fileRef.current !== null) {
@@ -91,7 +90,7 @@ const Header: React.FC<{
   }
 
   function loadingCornerstoneViewport() {
-    return images.length > 0 && series.length > 0;
+    return images.length > 0;
   }
 
   function loadedHeader() {
