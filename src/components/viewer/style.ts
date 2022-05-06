@@ -38,3 +38,17 @@ export const DicomViewerLoader = styled.div`
     color: ${(props) => props.theme.color.primary};
   }
 `;
+
+export const NonImageViewer = styled.div`
+  padding: 4rem;
+
+  .text-value {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.25rem;
+
+    span {
+      color: var(--text-color);
+    }
+  }
+`;

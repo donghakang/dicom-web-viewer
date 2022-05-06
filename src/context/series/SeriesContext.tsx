@@ -1,35 +1,20 @@
-import React, { createContext, Dispatch, useReducer, useContext } from "react";
+import React, { createContext, Dispatch, useReducer, useContext } from 'react';
 
 type SeriesState = {
   currentSeries: number;
-  series: {
-    seriesNumber: number;
-    seriesDescription: string;
-    countImages: number;
-  }[];
 };
 
 type SeriesAction =
   | {
-      type: "RESET_SERIES";
+      type: 'RESET_SERIES';
     }
   | {
-      type: "SET_CURRENT_SERIES";
+      type: 'SET_CURRENT_SERIES';
       currentSeries: number;
-    }
-  | {
-      type: "SET_SERIES";
-      series: {
-        seriesNumber: number;
-        seriesDescription: string;
-        countImages: number;
-      }[];
     };
 
 const initState = {
   currentSeries: 0,
-  seriesDescription: "",
-  series: [],
 };
 
 type SeriesDispatch = Dispatch<SeriesAction>;
@@ -39,24 +24,18 @@ const SeriesDispatchContext = createContext<SeriesDispatch | null>(null);
 
 function SeriesReducer(state: SeriesState, action: SeriesAction): SeriesState {
   switch (action.type) {
-    case "RESET_SERIES":
+    case 'RESET_SERIES':
       return {
         ...state,
         currentSeries: 0,
-        series: []
       };
-    case "SET_CURRENT_SERIES":
+    case 'SET_CURRENT_SERIES':
       return {
         ...state,
         currentSeries: action.currentSeries,
       };
-    case "SET_SERIES":
-      return {
-        ...state,
-        series: action.series,
-      };
     default:
-      throw new Error("Unhandled action");
+      throw new Error('Unhandled action');
   }
 }
 
@@ -74,12 +53,12 @@ export function SeriesProvider({ children }: { children: React.ReactNode }) {
 
 export function useSeriesState() {
   const state = useContext(SeriesStateContext);
-  if (!state) throw new Error("Cannot find SampleProvider"); // 유효하지 않을땐 에러를 발생
+  if (!state) throw new Error('Cannot find SampleProvider'); // 유효하지 않을땐 에러를 발생
   return state;
 }
 
 export function useSeriesDispatch() {
   const dispatch = useContext(SeriesDispatchContext);
-  if (!dispatch) throw new Error("Cannot find SampleProvider"); // 유효하지 않을땐 에러를 발생
+  if (!dispatch) throw new Error('Cannot find SampleProvider'); // 유효하지 않을땐 에러를 발생
   return dispatch;
 }

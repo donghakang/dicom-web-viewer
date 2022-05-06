@@ -1,36 +1,24 @@
 import * as React from 'react';
-import { useState, useRef } from 'react';
 import './App.css';
-import Viewer from './components/viewer/Viewer';
-import ProgressBar from './components/loader';
-import FileLoader from './components/fileloader';
-import { SeriesProvider } from './context/series/SeriesContext';
-import { MenubarProvider } from './context/menubar/MenubarContext';
-import { StatusProvider } from './context/status/StatusContext';
 import initCornerstone from './components/cornerstone/init';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Main from './page/Main';
+import { PasscodeProvider } from './context/code/CodeContext';
+import LoginPage from './page/LoginPage';
 
 const App: React.FC = () => {
   // File Loader
   initCornerstone();
-  const fileRef = useRef<HTMLInputElement>(null);
-  const folderRef = useRef<HTMLInputElement>(null);
-  const [files, setFiles] = useState<File[]>([]);
 
   return (
-    <SeriesProvider>
-      <StatusProvider>
-        <ProgressBar files={files} />
-        <MenubarProvider>
-          <Viewer fileRef={fileRef} folderRef={folderRef} />
-        </MenubarProvider>
-        <FileLoader
-          fileRef={fileRef}
-          folderRef={folderRef}
-          files={files}
-          setFiles={setFiles}
-        />
-      </StatusProvider>
-    </SeriesProvider>
+    <PasscodeProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<Main />} />
+        </Routes>
+      </Router>
+    </PasscodeProvider>
   );
 };
 

@@ -13,11 +13,7 @@ const variants = {
 
 const LeftSideMenu: React.FC = () => {
   const { leftSideMenuOpened } = useSideMenuState();
-  const { series } = useSeriesState();
   const images = useAppSelector((state) => state.imageLoader.images);
-
-  // console.log('re-render before series', series);
-
   return (
     <Styled.LeftSideMenu
       variants={variants}
@@ -25,11 +21,8 @@ const LeftSideMenu: React.FC = () => {
       animate={leftSideMenuOpened ? 'visible' : 'hidden'}
     >
       {images.length > 0 ? (
-        series.map((seriesInfo) => (
-          <SeriesComponent
-            key={seriesInfo.seriesNumber}
-            seriesInfo={seriesInfo}
-          />
+        images.map((seriesInfo, idx) => (
+          <SeriesComponent key={idx} seriesInfo={seriesInfo} />
         ))
       ) : (
         <></>

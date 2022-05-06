@@ -1,8 +1,8 @@
-import React from "react";
-import { BsLockFill } from "react-icons/bs";
-import { theme } from "../../../assets/styles/theme";
-import { useSeriesState } from "../../../context/series/SeriesContext";
-import { useAppSelector } from "../../../redux/hooks";
+import React from 'react';
+import { BsLockFill } from 'react-icons/bs';
+import { theme } from '../../../assets/styles/theme';
+import { useSeriesState } from '../../../context/series/SeriesContext';
+import { useAppSelector } from '../../../redux/hooks';
 
 interface InfoState {
   patientName: string;
@@ -77,15 +77,8 @@ const InfoMenu = () => {
   const { deidentification } = useAppSelector((state) => state.viewport);
   const { currentSeries } = useSeriesState();
 
-  const allSeriesInfo: any = images
-    .filter(
-      (value, index, self) =>
-        index ===
-        self.findIndex(
-          (t) => t.series.seriesNumber === value.series.seriesNumber
-        )
-    )
-    .filter((image) => image.series.seriesNumber === currentSeries)[0];
+  const allSeriesInfo: any = images.find((image) => image.id === currentSeries)
+    ?.data[0];
 
   return (
     <div className="content-container">
@@ -108,16 +101,16 @@ const InfoMenu = () => {
         ) : (
           <div
             style={{
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
-              color: theme.color.primary
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              color: theme.color.primary,
             }}
           >
             <BsLockFill size={40} />
-            <span style={{ marginTop: "1rem" }}>DEIDENTIFIED</span>
+            <span style={{ marginTop: '1rem' }}>DEIDENTIFIED</span>
           </div>
         )}
       </>
