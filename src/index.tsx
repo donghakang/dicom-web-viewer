@@ -1,16 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import initCornerstone from "./components/cornerstone/init";
-import { Provider } from "react-redux";
-import store from "./redux/store";
-import { ThemeProvider } from "styled-components";
-import { theme } from "./assets/styles/theme";
-import GlobalStyle from "./assets/styles/GlobalStyle";
-import { registerServiceWorker } from "./serviceWorkerRegistration";
-import { initializeApp } from "firebase/app";
-import { getAnalytics, logEvent } from "firebase/analytics";
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './assets/styles/theme';
+import GlobalStyle from './assets/styles/GlobalStyle';
+import { registerServiceWorker } from './serviceWorkerRegistration';
+import { initializeApp } from 'firebase/app';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
@@ -19,7 +17,7 @@ ReactDOM.render(
       <App />
     </Provider>
   </ThemeProvider>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
 
 const firebaseConfig = {
@@ -32,12 +30,10 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 logEvent(analytics, 'opened_dicom_viewer');
-
 
 // service worker
 registerServiceWorker();

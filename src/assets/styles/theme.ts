@@ -19,5 +19,6 @@ export const theme: DefaultTheme = {
     primary3: '#006270',
     dark: '#4a4a4a',
     gray: '#d6d6d6',
+    error: '#F44336',
   },
 };
