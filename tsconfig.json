@@ -6,11 +6,7 @@
     "jsx": "react-jsx",
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -22,13 +18,6 @@
     "downlevelIteration": true,
     "typeRoots": ["./node_modules/@types", "./src/@types"]
   },
-  "include": [
-    "src",
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "public"
-  ]
+  "include": ["src", "src/**/*"],
+  "exclude": ["node_modules", "dist", "public"]
 }

@@ -17,9 +17,6 @@ const SRC_DIR = path.join(__dirname, './src');
 const DIST_DIR = path.join(__dirname, './dist');
 const PUBLIC_DIR = path.join(__dirname, './public');
 
-console.log('path', path.join(__dirname));
-console.log();
-
 module.exports = {
   mode,
   entry: {
@@ -29,10 +26,12 @@ module.exports = {
     hot: true,
     host: 'localhost',
     port: 5500,
+    historyApiFallback: true,
   },
   output: {
     filename: '[name].js',
     path: DIST_DIR,
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -137,6 +136,7 @@ module.exports = {
       'process.env.REACT_APP_MEASUREMENT_ID': JSON.stringify(
         process.env.REACT_APP_MEASUREMENT_ID
       ),
+      'process.env.ENTRY_CODE': JSON.stringify(process.env.ENTRY_CODE),
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
