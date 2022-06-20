@@ -10,6 +10,8 @@ import {
   generateImageId,
   loadFile,
 } from '../helper/dicomFileReader';
+import { useSideMenuDispatch } from '../../context/menubar/MenubarContext';
+
 
 interface ProgressInterface {
   files: File[];
@@ -20,6 +22,7 @@ const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
   const step = 100 / files.length;
   const dispatch = useAppDispatch();
   const seriesDispatch = useSeriesDispatch();
+  const menubarDispatch = useSideMenuDispatch();
 
   async function loadWADOImages(files: File[]) {
     const dicomImages: any[] = [];
@@ -35,19 +38,15 @@ const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
       dicomImages.push(dicomInfo);
       setProgress((prev) => prev + step);
     }
+
+    if (dicomImages.length !== 0) {
+      menubarDispatch({ type: 'LEFT_OPEN' });
+      menubarDispatch({ type: 'RIGHT_OPEN' });
+    }
+
     dicomImages.sort((l, r) => {
       return l.instanceNumber - r.instanceNumber;
     });
-
-    console.log(
-      '👨🏻‍💻',
-      dicomImages.map((dcm) => {
-        return {
-          pid: dcm.meta.PatientID,
-          sid: dcm.meta.SeriesInstanceUID,
-        };
-      })
-    );
 
     const sortByPatientIDSeriesID = [] as {
       id: number;
