@@ -12,6 +12,7 @@ import {
 } from '../helper/dicomFileReader';
 import { useSideMenuDispatch } from '../../context/menubar/MenubarContext';
 
+
 interface ProgressInterface {
   files: File[];
 }
@@ -46,16 +47,6 @@ const ProgressBar: React.FC<ProgressInterface> = ({ files }) => {
     dicomImages.sort((l, r) => {
       return l.instanceNumber - r.instanceNumber;
     });
-
-    // console.log(
-    //   '👨🏻‍💻',
-    //   dicomImages.map((dcm) => {
-    //     return {
-    //       pid: dcm.meta.PatientID,
-    //       sid: dcm.meta.SeriesInstanceUID,
-    //     };
-    //   })
-    // );
 
     const sortByPatientIDSeriesID = [] as {
       id: number;

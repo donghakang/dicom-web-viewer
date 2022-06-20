@@ -61,6 +61,7 @@ export function dicomDatasetToCornerstone(imageId: string, dataset: any) {
     },
     meta: dataset,
   };
+  console.log('🐛', dicomInfo);
   return dicomInfo;
 }
 
