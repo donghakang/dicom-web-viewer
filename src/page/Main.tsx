@@ -21,16 +21,16 @@ const Main = () => {
       {state.isLog ? (
         <SeriesProvider>
           <StatusProvider>
-            <ProgressBar files={files} />
             <MenubarProvider>
+              <ProgressBar files={files} />
               <Viewer fileRef={fileRef} folderRef={folderRef} />
+              <FileLoader
+                fileRef={fileRef}
+                folderRef={folderRef}
+                files={files}
+                setFiles={setFiles}
+              />
             </MenubarProvider>
-            <FileLoader
-              fileRef={fileRef}
-              folderRef={folderRef}
-              files={files}
-              setFiles={setFiles}
-            />
           </StatusProvider>
         </SeriesProvider>
       ) : (
