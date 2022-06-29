@@ -2,7 +2,7 @@ import { PureComponent } from 'react';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cornerstone from 'cornerstone-core';
-import dicomParser from 'dicom-parser';
+// import dicomParser from 'dicom-parser';
 import { helpers } from '../helpers/index.js';
 import './ViewportOverlay.css';
 
@@ -88,7 +88,7 @@ class ViewportOverlay extends PureComponent {
     const normal = (
       <React.Fragment>
         <div className="top-left overlay-element">
-          <div>{formatPN(patientName)}</div>
+          <div>{formatPN(helpers.formatEncodedText(patientName))}</div>
           <div>{patientId}</div>
         </div>
         <div className="top-right overlay-element">
