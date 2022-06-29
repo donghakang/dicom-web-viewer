@@ -33,8 +33,11 @@
     "react-dom": "^17.0.2"
   },
   "dependencies": {
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
     "classnames": "^2.3.1",
     "date-fns": "^2.23.0",
+    "iconv-lite": "^0.6.3",
     "lodash.debounce": "^4.0.8",
     "prop-types": "^15.7.2",
     "react-resize-detector": "^6.7.6"
@@ -45,6 +48,7 @@
     "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.15.6",
     "@babel/preset-react": "^7.14.5",
+    "@rollup/plugin-json": "^4.1.0",
     "@svgr/rollup": "^5.5.0",
     "babel-eslint": "10.1.0",
     "babel-loader": "^8.2.2",
