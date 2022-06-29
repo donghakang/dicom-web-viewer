@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Header from '../header';
 import { RightSideMenu, LeftSideMenu } from '../sidemenu';
-import { useSideMenuDispatch } from '../../context/menubar/MenubarContext';
+import {
+  useSideMenuDispatch,
+  useSideMenuState,
+} from '../../context/menubar/MenubarContext';
 
 import DicomViewer from './DicomViewer';
 
@@ -21,7 +24,9 @@ const Viewer: React.FC<{
   const [, setTool] = useState<string>('Pan');
   const dispatch = useAppDispatch();
   const sideMenuDispatch = useSideMenuDispatch();
+  const sideMenuState = useSideMenuState();
 
+  console.log(sideMenuState);
   // hot key setup
   const handleKeyPress = useCallback((event) => {
     switch (event.key) {
