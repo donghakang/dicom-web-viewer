@@ -1,6 +1,6 @@
-import React from "react";
-import { IconContext } from "react-icons";
-import ReactTooltip from "react-tooltip";
+import React from 'react';
+import { IconContext } from 'react-icons';
+import ReactTooltip from 'react-tooltip';
 
 interface ButtonComponentInterface {
   id: string;
@@ -19,7 +19,7 @@ const ButtonComponent: React.FC<ButtonComponentInterface> = (props) => {
         onClick={props.onClick}
         data-tip
         data-for={`${props.id}`}
-        data-event={props.clickTrigger ? "click focus" : ""}
+        data-event={props.clickTrigger ? 'click focus' : ''}
       >
         <IconContext.Provider
           value={{
@@ -34,7 +34,7 @@ const ButtonComponent: React.FC<ButtonComponentInterface> = (props) => {
         className="custom-tooltip"
         place="bottom"
         effect="solid"
-        globalEventOff={props.clickTrigger ? "click" : ""}
+        globalEventOff={props.clickTrigger ? 'click' : ''}
         clickable={props.clickTrigger}
       >
         {props.tooltip}
