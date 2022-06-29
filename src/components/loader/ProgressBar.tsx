@@ -12,7 +12,6 @@ import {
 } from '../helper/dicomFileReader';
 import { useSideMenuDispatch } from '../../context/menubar/MenubarContext';
 
-
 interface ProgressInterface {
   files: File[];
 }

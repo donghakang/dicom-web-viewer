@@ -1,5 +1,6 @@
 import * as cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
 import dcmjs from 'dcmjs';
+import { decodeMessage } from './decoder';
 
 export function generateImageId(file: File) {
   return cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
@@ -39,7 +40,7 @@ export function dicomDatasetToCornerstone(imageId: string, dataset: any) {
     sliceDistance: getDicomSliceDistance(dataset),
     sliceLocation: dataset.SliceLocation ? dataset.SliceLocation : 1,
     patient: {
-      patientName: dataset.PatientName,
+      patientName: decodeMessage(dataset.PatientName),
     },
     study: {
       studyId: dataset.StudyID,

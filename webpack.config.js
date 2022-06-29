@@ -39,6 +39,9 @@ module.exports = {
       'cornerstone-wado-image-loader':
         'cornerstone-wado-image-loader/dist/dynamic-import/cornerstoneWADOImageLoader.min.js',
     },
+    fallback: {
+      stream: false,
+    },
   },
   module: {
     rules: [
