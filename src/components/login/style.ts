@@ -6,6 +6,7 @@ export const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 
   .login-wrapper {
     display: flex;
@@ -48,6 +49,26 @@ export const LoginContainer = styled.div`
       &:hover {
         color: ${({ theme }) => theme.color.primary2};
       }
+    }
+  }
+
+  .document-wrapper {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: ${({ theme }) => theme.color.primary};
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      text-decoration: none;
+      margin: 0;
+      padding: 0;
     }
   }
 `;

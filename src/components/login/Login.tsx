@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button } from '@mui/material';
-
 import * as Styled from './style';
 import { usePasscodeDispatch } from '../../context/code/CodeContext';
 import { Navigate } from 'react-router-dom';
+import { IoDocumentText } from 'react-icons/io5';
 
 const Login: React.FC = () => {
   const [code, setCode] = useState<string>('');
@@ -67,6 +66,11 @@ const Login: React.FC = () => {
               onChange={(e) => handleChangeInput(e)}
             />
             <button onClick={handleButtonClicked}>Login</button>
+          </div>
+          <div className="document-wrapper">
+            <a href="https://well-market-4f7.notion.site/DICOM-Web-Viewer-ec1cef99fa6744a68f3fc17a4f68d1fd">
+              <IoDocumentText />
+            </a>
           </div>
         </>
       ) : (

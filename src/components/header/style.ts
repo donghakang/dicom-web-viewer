@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Header = styled.nav`
   padding-top: 4px;
@@ -21,6 +21,7 @@ export const Header = styled.nav`
         list-style-type: none;
         margin: 0;
 
+        a,
         button {
           height: 100%;
 
@@ -80,6 +81,7 @@ export const Header = styled.nav`
     height: 40px;
     border-bottom: 1px solid #ffffffbb;
 
+    a,
     button {
       width: 80px;
       height: 24px;
