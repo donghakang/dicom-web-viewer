@@ -68,9 +68,12 @@ const Login: React.FC = () => {
             <button onClick={handleButtonClicked}>Login</button>
           </div>
           <div className="document-wrapper">
-            <a href="https://well-market-4f7.notion.site/DICOM-Web-Viewer-ec1cef99fa6744a68f3fc17a4f68d1fd">
-              <IoDocumentText />
-            </a>
+            <span>
+              To see documentation,{' '}
+              <a href="https://well-market-4f7.notion.site/DICOM-Web-Viewer-ec1cef99fa6744a68f3fc17a4f68d1fd">
+                Click here
+              </a>{' '}
+            </span>
           </div>
         </>
       ) : (

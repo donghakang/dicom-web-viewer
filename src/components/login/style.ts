@@ -4,6 +4,7 @@ export const LoginContainer = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -53,22 +54,24 @@ export const LoginContainer = styled.div`
   }
 
   .document-wrapper {
-    position: absolute;
-    bottom: 3rem;
-    right: 3rem;
-    width: 48px;
-    height: 48px;
-    border-radius: 24px;
-    background-color: ${({ theme }) => theme.color.primary};
-
+    margin-top: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
 
+    span {
+      color: #ebebeb;
+    }
+
     a {
       text-decoration: none;
+      color: ${({ theme }) => theme.color.primary};
       margin: 0;
       padding: 0;
+
+      &:hover {
+        color: ${({ theme }) => theme.color.primary2};
+      }
     }
   }
 `;
