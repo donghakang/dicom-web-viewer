@@ -13,6 +13,7 @@ import {
   BsFolder2,
   BsFileEarmark,
 } from 'react-icons/bs';
+import { IoDocumentText } from 'react-icons/io5';
 import { BiMenuAltRight } from 'react-icons/bi';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -140,6 +141,13 @@ const Header: React.FC<{
           element={<BsCircleHalf size={24} />}
         />
         <ButtonComponent
+          id="info"
+          onClick={(e) => handleToolClick(e, 'Info')}
+          tooltip="Information"
+          className="button-component"
+          element={<BsInfoCircleFill size={24} />}
+        />
+        <ButtonComponent
           id="deidentification"
           onClick={(e) => handleToolClick(e, 'Private')}
           tooltip="Deidentification"
@@ -161,13 +169,14 @@ const Header: React.FC<{
           element={<BsGrid3X2GapFill size={24} />}
         />
         <li style={{ flex: 1 }}></li>
-
         <ButtonComponent
-          id="info"
-          onClick={(e) => handleToolClick(e, 'Info')}
-          tooltip="Information"
+          id="document"
+          link={
+            'https://well-market-4f7.notion.site/DICOM-Web-Viewer-ec1cef99fa6744a68f3fc17a4f68d1fd'
+          }
+          tooltip="Tutorial document"
           className="button-component"
-          element={<BsInfoCircleFill size={24} />}
+          element={<IoDocumentText size={24} />}
         />
       </ul>
     );
@@ -184,6 +193,16 @@ const Header: React.FC<{
           tooltip="Open DICOM folder"
           className="button-component"
           element={<FaLungs size={24} />}
+        />
+        <li style={{ flex: 1 }}></li>
+        <ButtonComponent
+          id="document"
+          link={
+            'https://well-market-4f7.notion.site/DICOM-Web-Viewer-ec1cef99fa6744a68f3fc17a4f68d1fd'
+          }
+          tooltip="Tutorial document"
+          className="button-component"
+          element={<IoDocumentText size={24} />}
         />
       </ul>
     );

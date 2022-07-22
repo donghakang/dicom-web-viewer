@@ -1,6 +1,6 @@
-import React from "react";
-import { IconContext } from "react-icons";
-import * as Styled from './style'
+import React from 'react';
+import { IconContext } from 'react-icons';
+import * as Styled from './style';
 
 interface TooltipeInterface {
   id: string;
@@ -15,11 +15,7 @@ interface TooltipeInterface {
 const Tooltip: React.FC<TooltipeInterface> = (props) => {
   return (
     <li>
-      <Styled.Tooltip
-        id={props.id}
-        onClick={props.onClick}
-        
-      >
+      <Styled.Tooltip id={props.id} onClick={props.onClick}>
         <IconContext.Provider
           value={{
             className: props.className,
@@ -28,9 +24,7 @@ const Tooltip: React.FC<TooltipeInterface> = (props) => {
           {props.element}
         </IconContext.Provider>
         <span className="arrow"></span>
-        <span className="tooltip">
-            {props.tooltip}
-        </span>
+        <span className="tooltip">{props.tooltip}</span>
       </Styled.Tooltip>
     </li>
   );
